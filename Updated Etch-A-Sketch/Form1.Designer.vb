@@ -36,6 +36,7 @@ Partial Class Form1
         Me.ClearToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.HelpToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ClearButton = New System.Windows.Forms.Button()
+        Me.ColorDialog = New System.Windows.Forms.ColorDialog()
         CType(Me.GraphPictureBox, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.ButtonGroupBox.SuspendLayout()
         Me.TopMenuStrip.SuspendLayout()
@@ -197,4 +198,5 @@ Partial Class Form1
     Friend WithEvents DrawWavefromToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents ClearToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents HelpToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents ColorDialog As ColorDialog
 End Class

@@ -7,6 +7,20 @@ Public Class Form1
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
     End Sub
+    'Setting and Getting Color ---------------------------------------------------------------------------
+    Function SetColor(Optional newColor As Color = Nothing) As Color
+        Static _forecolor As Color = Color.Black
+        If newColor <> Nothing Then
+            _forecolor = newColor
+        End If
+        Return _forecolor
+    End Function
+    Function DialogBox() As Color
+        'Make sure to add the tool "Color Dialog Box" added to front pannel to work
+        ColorDialog.ShowDialog()
+        SetColor(ColorDialog.Color)
+        Return SetColor()
+    End Function
     'Program Logic --------------------------------------------------------------------------------------
     Function GetRandomNumberAround(thisNumber%, Optional within% = 10) As Integer
         Dim result%
@@ -14,7 +28,6 @@ Public Class Form1
         result += GetRandomNumber(within) + GetRandomNumber(within)
         Return result
     End Function
-
     Function GetRandomNumber(max%) As Integer
         Randomize()
 
@@ -34,7 +47,6 @@ Public Class Form1
         Me.DataBuffer.Enqueue(GetRandomNumberAround(last, 5))
 
     End Sub
-
     Sub GraphData()
         Dim g As Graphics = GraphPictureBox.CreateGraphics
         Dim pen As New Pen(Color.Purple)
@@ -59,7 +71,6 @@ Public Class Form1
         g.Dispose()
         pen.Dispose()
     End Sub
-
     Function RNG(min As Integer, max As Integer) As Integer
         Dim value As Single
         Randomize()
@@ -68,7 +79,6 @@ Public Class Form1
         value += min
         Return CInt(Math.Ceiling(value))
     End Function
-
     Sub ShakeAndClear()
         Dim movePosition As Integer = RNG(1, 350) 'RNG not nedded just added for randomness on the shake
         'Try
@@ -85,11 +95,31 @@ Public Class Form1
         Next
         GraphPictureBox.Refresh()
     End Sub
+    'Draw with mouse_____________________________________________________________________________________________
+    Private Sub DrawingPictureBox_MouseMove(sender As Object, e As MouseEventArgs) Handles GraphPictureBox.MouseMove
+        Static oldx, oldy As Integer
+
+        Select Case e.Button.ToString
+            Case "Left"
+                DrawWithMouse(oldx, oldy, e.X, e.Y)
+            Case "Right"
+                'context menu set in drawing picture box properties 
+            Case "Middle"
+                DialogBox()
+        End Select
+        oldx = e.X
+        oldy = e.Y
+    End Sub
+    Sub DrawWithMouse(oldx As Integer, oldY As Integer, newX As Integer, newY As Integer)
+        Dim graphics As Graphics = GraphPictureBox.CreateGraphics
+        Dim pen As New Pen(SetColor)
+        graphics.DrawLine(pen, oldx, oldY, newX, newY)
+        graphics.Dispose()
+    End Sub
     'Event Handlers -------------------------------------------------------------------------------------
     Private Sub ExitButton_Click(sender As Object, e As EventArgs) Handles ExitButton.Click
         Me.Close()
     End Sub
-
     Private Sub GraphButton_Click(sender As Object, e As EventArgs) Handles GraphButton.Click
         GetData()
         GraphData()
@@ -98,8 +128,10 @@ Public Class Form1
         'Next
         'GetData()
     End Sub
-
     Private Sub ClearButton_Click(sender As Object, e As EventArgs) Handles ClearButton.Click
         ShakeAndClear()
+    End Sub
+    Private Sub ColorButton_Click(sender As Object, e As EventArgs) Handles ColorButton.Click
+        DialogBox()
     End Sub
 End Class

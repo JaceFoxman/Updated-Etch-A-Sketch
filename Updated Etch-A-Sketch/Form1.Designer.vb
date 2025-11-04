@@ -28,6 +28,7 @@ Partial Class Form1
         Me.ExitButton = New System.Windows.Forms.Button()
         Me.StatusStrip = New System.Windows.Forms.StatusStrip()
         Me.ButtonGroupBox = New System.Windows.Forms.GroupBox()
+        Me.ClearButton = New System.Windows.Forms.Button()
         Me.TopMenuStrip = New System.Windows.Forms.MenuStrip()
         Me.FileToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.EditToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -35,8 +36,9 @@ Partial Class Form1
         Me.DrawWavefromToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ClearToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.HelpToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.ClearButton = New System.Windows.Forms.Button()
         Me.ColorDialog = New System.Windows.Forms.ColorDialog()
+        Me.AboutToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.EXITToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         CType(Me.GraphPictureBox, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.ButtonGroupBox.SuspendLayout()
         Me.TopMenuStrip.SuspendLayout()
@@ -106,6 +108,16 @@ Partial Class Form1
         Me.ButtonGroupBox.TabIndex = 6
         Me.ButtonGroupBox.TabStop = False
         '
+        'ClearButton
+        '
+        Me.ClearButton.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.ClearButton.Location = New System.Drawing.Point(265, 25)
+        Me.ClearButton.Name = "ClearButton"
+        Me.ClearButton.Size = New System.Drawing.Size(122, 79)
+        Me.ClearButton.TabIndex = 5
+        Me.ClearButton.Text = "&CLEAR"
+        Me.ClearButton.UseVisualStyleBackColor = True
+        '
         'TopMenuStrip
         '
         Me.TopMenuStrip.GripMargin = New System.Windows.Forms.Padding(2, 2, 0, 2)
@@ -119,6 +131,7 @@ Partial Class Form1
         '
         'FileToolStripMenuItem
         '
+        Me.FileToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.EXITToolStripMenuItem})
         Me.FileToolStripMenuItem.Name = "FileToolStripMenuItem"
         Me.FileToolStripMenuItem.Size = New System.Drawing.Size(54, 29)
         Me.FileToolStripMenuItem.Text = "&File"
@@ -150,19 +163,22 @@ Partial Class Form1
         '
         'HelpToolStripMenuItem
         '
+        Me.HelpToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.AboutToolStripMenuItem})
         Me.HelpToolStripMenuItem.Name = "HelpToolStripMenuItem"
         Me.HelpToolStripMenuItem.Size = New System.Drawing.Size(65, 29)
         Me.HelpToolStripMenuItem.Text = "&Help"
         '
-        'ClearButton
+        'AboutToolStripMenuItem
         '
-        Me.ClearButton.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.ClearButton.Location = New System.Drawing.Point(265, 25)
-        Me.ClearButton.Name = "ClearButton"
-        Me.ClearButton.Size = New System.Drawing.Size(122, 79)
-        Me.ClearButton.TabIndex = 5
-        Me.ClearButton.Text = "&CLEAR"
-        Me.ClearButton.UseVisualStyleBackColor = True
+        Me.AboutToolStripMenuItem.Name = "AboutToolStripMenuItem"
+        Me.AboutToolStripMenuItem.Size = New System.Drawing.Size(270, 34)
+        Me.AboutToolStripMenuItem.Text = "&About"
+        '
+        'EXITToolStripMenuItem
+        '
+        Me.EXITToolStripMenuItem.Name = "EXITToolStripMenuItem"
+        Me.EXITToolStripMenuItem.Size = New System.Drawing.Size(270, 34)
+        Me.EXITToolStripMenuItem.Text = "&EXIT"
         '
         'Form1
         '
@@ -199,4 +215,6 @@ Partial Class Form1
     Friend WithEvents ClearToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents HelpToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents ColorDialog As ColorDialog
+    Friend WithEvents AboutToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents EXITToolStripMenuItem As ToolStripMenuItem
 End Class

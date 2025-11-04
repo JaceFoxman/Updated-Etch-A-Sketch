@@ -1,5 +1,12 @@
-﻿Option Strict On
+﻿'Jason Permann
+'Fall 2025
+'RCET 3371
+'Updated Etch-A-Sketch
+'
+
+Option Strict On
 Option Explicit On
+Option Compare Text
 
 Imports System.Threading.Thread 'add to allow sleep function to work
 Public Class Form1
@@ -9,7 +16,7 @@ Public Class Form1
     End Sub
     'Setting and Getting Color ---------------------------------------------------------------------------
     Function SetColor(Optional newColor As Color = Nothing) As Color
-        Static _forecolor As Color = Color.Black
+        Static _forecolor As Color = Color.White
         If newColor <> Nothing Then
             _forecolor = newColor
         End If
@@ -123,15 +130,29 @@ Public Class Form1
     Private Sub GraphButton_Click(sender As Object, e As EventArgs) Handles GraphButton.Click
         GetData()
         GraphData()
-        'For i = 1 To 100
-        '    Console.WriteLine(GetRandomNumber(GetRandomNumberAround(50, 10)))
-        'Next
-        'GetData()
     End Sub
     Private Sub ClearButton_Click(sender As Object, e As EventArgs) Handles ClearButton.Click
         ShakeAndClear()
     End Sub
     Private Sub ColorButton_Click(sender As Object, e As EventArgs) Handles ColorButton.Click
         DialogBox()
+    End Sub
+    'Menu Items -------------------------------------------------------------------------------------
+    Private Sub AboutToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles AboutToolStripMenuItem.Click
+        Me.Hide()
+        About.Show()
+    End Sub
+    Private Sub ClearToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ClearToolStripMenuItem.Click
+        ShakeAndClear()
+    End Sub
+    Private Sub DrawWavefromToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles DrawWavefromToolStripMenuItem.Click
+        GetData()
+        GraphData()
+    End Sub
+    Private Sub SelectColorToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SelectColorToolStripMenuItem.Click
+        DialogBox()
+    End Sub
+    Private Sub EXITToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles EXITToolStripMenuItem.Click
+        Me.Close()
     End Sub
 End Class

@@ -88,11 +88,11 @@ Public Class Form1
     End Function
     Sub ShakeAndClear()
         Dim movePosition As Integer = RNG(1, 350) 'RNG not nedded just added for randomness on the shake
-        'Try
-        '    My.Computer.Audio.Play(My.Resources.KH_Select, AudioPlayMode.Background)
-        'Catch ex As Exception
-        '    MsgBox("Missing Resources", MsgBoxStyle.Critical, "Error")
-        'End Try
+        Try
+            My.Computer.Audio.Play(My.Resources.KH_Select, AudioPlayMode.Background)
+        Catch ex As Exception
+            MsgBox("Missing Resources", MsgBoxStyle.Critical, "Error")
+        End Try
 
         For i = 1 To 10
             Me.Top += movePosition

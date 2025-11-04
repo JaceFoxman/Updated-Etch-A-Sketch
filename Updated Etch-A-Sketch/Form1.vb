@@ -1,5 +1,7 @@
 ﻿'Jason Permann
 'Fall 2025
+'Jason Permann
+'Fall 2025
 'RCET 3371
 'Updated Etch-A-Sketch
 '
@@ -8,10 +10,44 @@ Option Strict On
 Option Explicit On
 Option Compare Text
 
+Imports System.IO.Ports
 Imports System.Threading.Thread 'add to allow sleep function to work
 Public Class Form1
     Dim DataBuffer As New Queue(Of Integer)
+    'Initialize Form ---------------------------------------------------------------------------------
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        SetDefaults()
+    End Sub
+    Sub SetDefaults()
+        For Each port In SerialPort.GetPortNames()
+            COMPort_ComboBox.Items.Add(port)
+        Next
+        COMPort_ComboBox.SelectedIndex = 0
+    End Sub
+    'Q@ Board Functions --------------------------------------------------------------------------------
+    Sub Connect()
+
+        Try
+            Dim comPort As String = COMPort_ComboBox.Text
+            SerialPort.Close()
+            SerialPort.BaudRate = 9600 'Q@ Board Default
+            SerialPort.Parity = IO.Ports.Parity.None   'No Parity
+            SerialPort.StopBits = IO.Ports.StopBits.One    '1 Stop Bit
+            SerialPort.DataBits = 8    '8 Data Bits
+            SerialPort.PortName = comPort 'Change to your COM Port
+
+
+            SerialPort.Open()  'Open Serial Port
+            If SerialPort.IsOpen Then  'Check if Serial Port is open
+                MessageBox.Show("Connected to " & SerialPort.PortName) 'Show message if connected
+            End If
+
+        Catch ex As Exception
+            'Show error message if port is invalid
+            MessageBox.Show("Error: " & ex.Message)
+
+            Return
+        End Try
 
     End Sub
     'Setting and Getting Color ---------------------------------------------------------------------------
@@ -102,7 +138,6 @@ Public Class Form1
         Next
         GraphPictureBox.Refresh()
     End Sub
-
     Sub Graticules()
         Dim graphics As Graphics = GraphPictureBox.CreateGraphics
         Dim pen As New Pen(Color.Black)
@@ -192,6 +227,7 @@ Public Class Form1
     End Sub
     'Event Handlers -------------------------------------------------------------------------------------
     Private Sub ExitButton_Click(sender As Object, e As EventArgs) Handles ExitButton.Click
+        SerialPort.Close() 'Close Serial Port
         Me.Close()
     End Sub
     Private Sub GraphButton_Click(sender As Object, e As EventArgs) Handles GraphButton.Click
@@ -208,6 +244,14 @@ Public Class Form1
     End Sub
     Private Sub ColorButton_Click(sender As Object, e As EventArgs) Handles ColorButton.Click
         DialogBox()
+    End Sub
+    Private Sub Connect_Button_Click(sender As Object, e As EventArgs) Handles Connect_Button.Click
+        Select Case COMPort_ComboBox.Text <> ""  'Wait for COM Port Selection
+            Case True
+                Connect()   'Connect to Serial Port
+            Case False
+                MessageBox.Show("Please select a COM Port")
+        End Select
     End Sub
     'Menu Items -------------------------------------------------------------------------------------
     Private Sub AboutToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles AboutToolStripMenuItem.Click
@@ -230,6 +274,8 @@ Public Class Form1
         DialogBox()
     End Sub
     Private Sub EXITToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles EXITToolStripMenuItem.Click
+        SerialPort.Close() 'Close Serial Port
         Me.Close()
     End Sub
+
 End Class

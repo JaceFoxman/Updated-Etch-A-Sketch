@@ -22,6 +22,7 @@ Partial Class Form1
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
+        Me.components = New System.ComponentModel.Container()
         Me.GraphPictureBox = New System.Windows.Forms.PictureBox()
         Me.ColorButton = New System.Windows.Forms.Button()
         Me.GraphButton = New System.Windows.Forms.Button()
@@ -31,14 +32,17 @@ Partial Class Form1
         Me.ClearButton = New System.Windows.Forms.Button()
         Me.TopMenuStrip = New System.Windows.Forms.MenuStrip()
         Me.FileToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.EXITToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.EditToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.SelectColorToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.DrawWavefromToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ClearToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.HelpToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.ColorDialog = New System.Windows.Forms.ColorDialog()
         Me.AboutToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.EXITToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ColorDialog = New System.Windows.Forms.ColorDialog()
+        Me.SerialPort = New System.IO.Ports.SerialPort(Me.components)
+        Me.Connect_Button = New System.Windows.Forms.Button()
+        Me.COMPort_ComboBox = New System.Windows.Forms.ComboBox()
         CType(Me.GraphPictureBox, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.ButtonGroupBox.SuspendLayout()
         Me.TopMenuStrip.SuspendLayout()
@@ -136,6 +140,12 @@ Partial Class Form1
         Me.FileToolStripMenuItem.Size = New System.Drawing.Size(54, 29)
         Me.FileToolStripMenuItem.Text = "&File"
         '
+        'EXITToolStripMenuItem
+        '
+        Me.EXITToolStripMenuItem.Name = "EXITToolStripMenuItem"
+        Me.EXITToolStripMenuItem.Size = New System.Drawing.Size(148, 34)
+        Me.EXITToolStripMenuItem.Text = "&EXIT"
+        '
         'EditToolStripMenuItem
         '
         Me.EditToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.SelectColorToolStripMenuItem, Me.DrawWavefromToolStripMenuItem, Me.ClearToolStripMenuItem})
@@ -146,19 +156,19 @@ Partial Class Form1
         'SelectColorToolStripMenuItem
         '
         Me.SelectColorToolStripMenuItem.Name = "SelectColorToolStripMenuItem"
-        Me.SelectColorToolStripMenuItem.Size = New System.Drawing.Size(270, 34)
+        Me.SelectColorToolStripMenuItem.Size = New System.Drawing.Size(242, 34)
         Me.SelectColorToolStripMenuItem.Text = "Select Color"
         '
         'DrawWavefromToolStripMenuItem
         '
         Me.DrawWavefromToolStripMenuItem.Name = "DrawWavefromToolStripMenuItem"
-        Me.DrawWavefromToolStripMenuItem.Size = New System.Drawing.Size(270, 34)
+        Me.DrawWavefromToolStripMenuItem.Size = New System.Drawing.Size(242, 34)
         Me.DrawWavefromToolStripMenuItem.Text = "Draw Wavefrom"
         '
         'ClearToolStripMenuItem
         '
         Me.ClearToolStripMenuItem.Name = "ClearToolStripMenuItem"
-        Me.ClearToolStripMenuItem.Size = New System.Drawing.Size(270, 34)
+        Me.ClearToolStripMenuItem.Size = New System.Drawing.Size(242, 34)
         Me.ClearToolStripMenuItem.Text = "Clear"
         '
         'HelpToolStripMenuItem
@@ -171,20 +181,36 @@ Partial Class Form1
         'AboutToolStripMenuItem
         '
         Me.AboutToolStripMenuItem.Name = "AboutToolStripMenuItem"
-        Me.AboutToolStripMenuItem.Size = New System.Drawing.Size(270, 34)
+        Me.AboutToolStripMenuItem.Size = New System.Drawing.Size(164, 34)
         Me.AboutToolStripMenuItem.Text = "&About"
         '
-        'EXITToolStripMenuItem
+        'Connect_Button
         '
-        Me.EXITToolStripMenuItem.Name = "EXITToolStripMenuItem"
-        Me.EXITToolStripMenuItem.Size = New System.Drawing.Size(270, 34)
-        Me.EXITToolStripMenuItem.Text = "&EXIT"
+        Me.Connect_Button.BackColor = System.Drawing.Color.Green
+        Me.Connect_Button.ForeColor = System.Drawing.Color.GhostWhite
+        Me.Connect_Button.Location = New System.Drawing.Point(12, 383)
+        Me.Connect_Button.Name = "Connect_Button"
+        Me.Connect_Button.Size = New System.Drawing.Size(136, 35)
+        Me.Connect_Button.TabIndex = 9
+        Me.Connect_Button.Text = "Connect"
+        Me.Connect_Button.UseVisualStyleBackColor = False
+        '
+        'COMPort_ComboBox
+        '
+        Me.COMPort_ComboBox.Font = New System.Drawing.Font("Consolas", 10.0!)
+        Me.COMPort_ComboBox.FormattingEnabled = True
+        Me.COMPort_ComboBox.Location = New System.Drawing.Point(12, 339)
+        Me.COMPort_ComboBox.Name = "COMPort_ComboBox"
+        Me.COMPort_ComboBox.Size = New System.Drawing.Size(133, 31)
+        Me.COMPort_ComboBox.TabIndex = 8
         '
         'Form1
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(9.0!, 20.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(799, 454)
+        Me.Controls.Add(Me.Connect_Button)
+        Me.Controls.Add(Me.COMPort_ComboBox)
         Me.Controls.Add(Me.ButtonGroupBox)
         Me.Controls.Add(Me.StatusStrip)
         Me.Controls.Add(Me.TopMenuStrip)
@@ -217,4 +243,7 @@ Partial Class Form1
     Friend WithEvents ColorDialog As ColorDialog
     Friend WithEvents AboutToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents EXITToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents SerialPort As IO.Ports.SerialPort
+    Friend WithEvents Connect_Button As Button
+    Friend WithEvents COMPort_ComboBox As ComboBox
 End Class

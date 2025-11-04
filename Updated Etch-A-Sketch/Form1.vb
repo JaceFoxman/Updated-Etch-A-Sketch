@@ -102,8 +102,75 @@ Public Class Form1
         Next
         GraphPictureBox.Refresh()
     End Sub
+
+    Sub Graticules()
+        Dim graphics As Graphics = GraphPictureBox.CreateGraphics
+        Dim pen As New Pen(Color.Black)
+        Dim y As Integer = 0
+        Dim x As Integer = 0
+
+        Do Until y > GraphPictureBox.Height
+            y += (GraphPictureBox.Height \ 10)
+            graphics.DrawLine(pen, 0, y, GraphPictureBox.Width, y)
+        Loop
+
+        Do Until x > GraphPictureBox.Width
+            x += (GraphPictureBox.Width \ 10)
+            graphics.DrawLine(pen, x, 0, x, GraphPictureBox.Height)
+        Loop
+    End Sub
+    Sub SineWave()
+        Dim graphics As Graphics = GraphPictureBox.CreateGraphics
+        Dim pen As New Pen(Color.Green)
+        Dim ymax As Integer = GraphPictureBox.Height \ 2
+        Dim oldx, newy As Integer
+        Dim oldy As Integer = GraphPictureBox.Height \ 2
+        Dim degresPerGraticule As Double = 360 / GraphPictureBox.Width
+
+        For x = 0 To GraphPictureBox.Width
+            newy = CInt(ymax * Math.Sin((Math.PI / 180) * (x * degresPerGraticule))) + GraphPictureBox.Height \ 2
+            graphics.DrawLine(pen, oldx, oldy, x, newy)
+            oldx = x
+            oldy = newy
+        Next
+    End Sub
+    Sub CosineWave()
+        Dim graphics As Graphics = GraphPictureBox.CreateGraphics
+        Dim pen As New Pen(Color.Blue)
+        Dim ymax As Integer = GraphPictureBox.Height \ 2
+        Dim oldx, newy As Integer
+        Dim oldy As Integer = GraphPictureBox.Height 'remove the divide 2 here so cosine starts at the right point 
+        Dim degresPerGraticule As Double = 360 / GraphPictureBox.Width
+
+        For x = 0 To GraphPictureBox.Width
+            newy = CInt(ymax * Math.Cos((Math.PI / 180) * (x * degresPerGraticule))) + GraphPictureBox.Height \ 2
+            graphics.DrawLine(pen, oldx, oldy, x, newy)
+            oldx = x
+            oldy = newy
+        Next
+    End Sub
+    Sub TangentWave()
+        Dim graphics As Graphics = GraphPictureBox.CreateGraphics
+        Dim pen As New Pen(Color.Red)
+        Dim ymax As Integer = GraphPictureBox.Height \ 2
+        Dim oldx, newy As Integer
+        Dim oldy As Integer = GraphPictureBox.Height \ 2
+        Dim degresPerGraticule As Double = 360 / GraphPictureBox.Width
+        Try
+            For x = 0 To GraphPictureBox.Width
+                newy = CInt(ymax * Math.Tan((Math.PI / 180) * (x * degresPerGraticule))) + GraphPictureBox.Height \ 2
+                graphics.DrawLine(pen, oldx, oldy, x, newy)
+                oldx = x
+                oldy = newy
+            Next
+        Catch ex As Exception
+            MsgBox("Tangent expression overflow", MsgBoxStyle.Critical, "Math Error")
+        End Try
+
+
+    End Sub
     'Draw with mouse_____________________________________________________________________________________________
-    Private Sub DrawingPictureBox_MouseMove(sender As Object, e As MouseEventArgs) Handles GraphPictureBox.MouseMove
+    Private Sub GraphPictureBox_MouseMove(sender As Object, e As MouseEventArgs) Handles GraphPictureBox.MouseMove
         Static oldx, oldy As Integer
 
         Select Case e.Button.ToString
@@ -128,8 +195,13 @@ Public Class Form1
         Me.Close()
     End Sub
     Private Sub GraphButton_Click(sender As Object, e As EventArgs) Handles GraphButton.Click
-        GetData()
-        GraphData()
+        'GetData()
+        'GraphData()
+        ShakeAndClear()
+        Graticules()
+        SineWave()
+        CosineWave()
+        TangentWave()
     End Sub
     Private Sub ClearButton_Click(sender As Object, e As EventArgs) Handles ClearButton.Click
         ShakeAndClear()
@@ -146,8 +218,13 @@ Public Class Form1
         ShakeAndClear()
     End Sub
     Private Sub DrawWavefromToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles DrawWavefromToolStripMenuItem.Click
-        GetData()
-        GraphData()
+        'GetData()
+        'GraphData()
+        ShakeAndClear()
+        Graticules()
+        SineWave()
+        CosineWave()
+        TangentWave()
     End Sub
     Private Sub SelectColorToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SelectColorToolStripMenuItem.Click
         DialogBox()

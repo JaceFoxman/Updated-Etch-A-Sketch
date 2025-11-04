@@ -44,8 +44,24 @@ Partial Class Form1
         Me.Connect_Button = New System.Windows.Forms.Button()
         Me.COMPort_ComboBox = New System.Windows.Forms.ComboBox()
         Me.RadioGroupBox = New System.Windows.Forms.GroupBox()
-        Me.MouseRadioButton = New System.Windows.Forms.RadioButton()
         Me.QBoardRadioButton = New System.Windows.Forms.RadioButton()
+        Me.MouseRadioButton = New System.Windows.Forms.RadioButton()
+        Me.ReadTimer = New System.Windows.Forms.Timer(Me.components)
+        Me.XHighTextBox = New System.Windows.Forms.TextBox()
+        Me.XLowTextBox = New System.Windows.Forms.TextBox()
+        Me.YHighTextBox = New System.Windows.Forms.TextBox()
+        Me.YLowTextBox = New System.Windows.Forms.TextBox()
+        Me.CurrentTextBox = New System.Windows.Forms.TextBox()
+        Me.CommandTimer = New System.Windows.Forms.Timer(Me.components)
+        Me.XFinalTextBox = New System.Windows.Forms.TextBox()
+        Me.YFinalTextBox = New System.Windows.Forms.TextBox()
+        Me.XHighLabel = New System.Windows.Forms.Label()
+        Me.XLowLabel = New System.Windows.Forms.Label()
+        Me.XFinalLabel = New System.Windows.Forms.Label()
+        Me.YHighLabel = New System.Windows.Forms.Label()
+        Me.YLowLabel = New System.Windows.Forms.Label()
+        Me.YFianlLabel = New System.Windows.Forms.Label()
+        Me.CurrentDataLabel = New System.Windows.Forms.Label()
         CType(Me.GraphPictureBox, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.ButtonGroupBox.SuspendLayout()
         Me.TopMenuStrip.SuspendLayout()
@@ -60,7 +76,7 @@ Partial Class Form1
         Me.GraphPictureBox.BackColor = System.Drawing.SystemColors.ActiveCaptionText
         Me.GraphPictureBox.Location = New System.Drawing.Point(0, 19)
         Me.GraphPictureBox.Name = "GraphPictureBox"
-        Me.GraphPictureBox.Size = New System.Drawing.Size(799, 289)
+        Me.GraphPictureBox.Size = New System.Drawing.Size(1402, 599)
         Me.GraphPictureBox.TabIndex = 1
         Me.GraphPictureBox.TabStop = False
         '
@@ -100,9 +116,9 @@ Partial Class Form1
         'StatusStrip
         '
         Me.StatusStrip.ImageScalingSize = New System.Drawing.Size(24, 24)
-        Me.StatusStrip.Location = New System.Drawing.Point(0, 432)
+        Me.StatusStrip.Location = New System.Drawing.Point(0, 742)
         Me.StatusStrip.Name = "StatusStrip"
-        Me.StatusStrip.Size = New System.Drawing.Size(799, 22)
+        Me.StatusStrip.Size = New System.Drawing.Size(1402, 22)
         Me.StatusStrip.TabIndex = 5
         Me.StatusStrip.Text = "StatusStrip1"
         '
@@ -113,7 +129,7 @@ Partial Class Form1
         Me.ButtonGroupBox.Controls.Add(Me.ClearButton)
         Me.ButtonGroupBox.Controls.Add(Me.ExitButton)
         Me.ButtonGroupBox.Controls.Add(Me.GraphButton)
-        Me.ButtonGroupBox.Location = New System.Drawing.Point(278, 314)
+        Me.ButtonGroupBox.Location = New System.Drawing.Point(881, 624)
         Me.ButtonGroupBox.Name = "ButtonGroupBox"
         Me.ButtonGroupBox.Size = New System.Drawing.Size(521, 115)
         Me.ButtonGroupBox.TabIndex = 5
@@ -137,7 +153,7 @@ Partial Class Form1
         Me.TopMenuStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.FileToolStripMenuItem, Me.EditToolStripMenuItem, Me.HelpToolStripMenuItem})
         Me.TopMenuStrip.Location = New System.Drawing.Point(0, 0)
         Me.TopMenuStrip.Name = "TopMenuStrip"
-        Me.TopMenuStrip.Size = New System.Drawing.Size(799, 36)
+        Me.TopMenuStrip.Size = New System.Drawing.Size(1402, 36)
         Me.TopMenuStrip.TabIndex = 7
         Me.TopMenuStrip.Text = "MenuStrip1"
         '
@@ -145,20 +161,20 @@ Partial Class Form1
         '
         Me.FileToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.EXITToolStripMenuItem})
         Me.FileToolStripMenuItem.Name = "FileToolStripMenuItem"
-        Me.FileToolStripMenuItem.Size = New System.Drawing.Size(54, 30)
+        Me.FileToolStripMenuItem.Size = New System.Drawing.Size(54, 32)
         Me.FileToolStripMenuItem.Text = "&File"
         '
         'EXITToolStripMenuItem
         '
         Me.EXITToolStripMenuItem.Name = "EXITToolStripMenuItem"
-        Me.EXITToolStripMenuItem.Size = New System.Drawing.Size(270, 34)
+        Me.EXITToolStripMenuItem.Size = New System.Drawing.Size(148, 34)
         Me.EXITToolStripMenuItem.Text = "&EXIT"
         '
         'EditToolStripMenuItem
         '
         Me.EditToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.SelectColorToolStripMenuItem, Me.DrawWavefromToolStripMenuItem, Me.ClearToolStripMenuItem})
         Me.EditToolStripMenuItem.Name = "EditToolStripMenuItem"
-        Me.EditToolStripMenuItem.Size = New System.Drawing.Size(58, 30)
+        Me.EditToolStripMenuItem.Size = New System.Drawing.Size(58, 32)
         Me.EditToolStripMenuItem.Text = "&Edit"
         '
         'SelectColorToolStripMenuItem
@@ -183,7 +199,7 @@ Partial Class Form1
         '
         Me.HelpToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.AboutToolStripMenuItem})
         Me.HelpToolStripMenuItem.Name = "HelpToolStripMenuItem"
-        Me.HelpToolStripMenuItem.Size = New System.Drawing.Size(65, 30)
+        Me.HelpToolStripMenuItem.Size = New System.Drawing.Size(65, 32)
         Me.HelpToolStripMenuItem.Text = "&Help"
         '
         'AboutToolStripMenuItem
@@ -192,11 +208,15 @@ Partial Class Form1
         Me.AboutToolStripMenuItem.Size = New System.Drawing.Size(164, 34)
         Me.AboutToolStripMenuItem.Text = "&About"
         '
+        'SerialPort
+        '
+        '
         'Connect_Button
         '
+        Me.Connect_Button.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.Connect_Button.BackColor = System.Drawing.Color.Green
         Me.Connect_Button.ForeColor = System.Drawing.Color.GhostWhite
-        Me.Connect_Button.Location = New System.Drawing.Point(12, 383)
+        Me.Connect_Button.Location = New System.Drawing.Point(12, 693)
         Me.Connect_Button.Name = "Connect_Button"
         Me.Connect_Button.Size = New System.Drawing.Size(136, 35)
         Me.Connect_Button.TabIndex = 1
@@ -205,36 +225,26 @@ Partial Class Form1
         '
         'COMPort_ComboBox
         '
+        Me.COMPort_ComboBox.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.COMPort_ComboBox.Font = New System.Drawing.Font("Consolas", 10.0!)
         Me.COMPort_ComboBox.FormattingEnabled = True
-        Me.COMPort_ComboBox.Location = New System.Drawing.Point(12, 339)
+        Me.COMPort_ComboBox.Location = New System.Drawing.Point(12, 649)
         Me.COMPort_ComboBox.Name = "COMPort_ComboBox"
         Me.COMPort_ComboBox.Size = New System.Drawing.Size(133, 31)
         Me.COMPort_ComboBox.TabIndex = 0
         '
         'RadioGroupBox
         '
+        Me.RadioGroupBox.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.RadioGroupBox.Controls.Add(Me.QBoardRadioButton)
         Me.RadioGroupBox.Controls.Add(Me.MouseRadioButton)
         Me.RadioGroupBox.Font = New System.Drawing.Font("Consolas", 7.0!)
-        Me.RadioGroupBox.Location = New System.Drawing.Point(154, 314)
+        Me.RadioGroupBox.Location = New System.Drawing.Point(757, 624)
         Me.RadioGroupBox.Name = "RadioGroupBox"
         Me.RadioGroupBox.Size = New System.Drawing.Size(118, 115)
         Me.RadioGroupBox.TabIndex = 2
         Me.RadioGroupBox.TabStop = False
         Me.RadioGroupBox.Text = "Drawing Mode"
-        '
-        'MouseRadioButton
-        '
-        Me.MouseRadioButton.AutoSize = True
-        Me.MouseRadioButton.Font = New System.Drawing.Font("Consolas", 10.0!)
-        Me.MouseRadioButton.Location = New System.Drawing.Point(6, 32)
-        Me.MouseRadioButton.Name = "MouseRadioButton"
-        Me.MouseRadioButton.Size = New System.Drawing.Size(90, 27)
-        Me.MouseRadioButton.TabIndex = 3
-        Me.MouseRadioButton.TabStop = True
-        Me.MouseRadioButton.Text = "&Mouse"
-        Me.MouseRadioButton.UseVisualStyleBackColor = True
         '
         'QBoardRadioButton
         '
@@ -248,11 +258,185 @@ Partial Class Form1
         Me.QBoardRadioButton.Text = "&Q@Board"
         Me.QBoardRadioButton.UseVisualStyleBackColor = True
         '
+        'MouseRadioButton
+        '
+        Me.MouseRadioButton.AutoSize = True
+        Me.MouseRadioButton.Font = New System.Drawing.Font("Consolas", 10.0!)
+        Me.MouseRadioButton.Location = New System.Drawing.Point(6, 32)
+        Me.MouseRadioButton.Name = "MouseRadioButton"
+        Me.MouseRadioButton.Size = New System.Drawing.Size(90, 27)
+        Me.MouseRadioButton.TabIndex = 3
+        Me.MouseRadioButton.TabStop = True
+        Me.MouseRadioButton.Text = "&Mouse"
+        Me.MouseRadioButton.UseVisualStyleBackColor = True
+        '
+        'ReadTimer
+        '
+        Me.ReadTimer.Interval = 500
+        '
+        'XHighTextBox
+        '
+        Me.XHighTextBox.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.XHighTextBox.Location = New System.Drawing.Point(433, 649)
+        Me.XHighTextBox.Name = "XHighTextBox"
+        Me.XHighTextBox.Size = New System.Drawing.Size(104, 26)
+        Me.XHighTextBox.TabIndex = 8
+        Me.XHighTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        '
+        'XLowTextBox
+        '
+        Me.XLowTextBox.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.XLowTextBox.Location = New System.Drawing.Point(556, 651)
+        Me.XLowTextBox.Name = "XLowTextBox"
+        Me.XLowTextBox.Size = New System.Drawing.Size(99, 26)
+        Me.XLowTextBox.TabIndex = 9
+        Me.XLowTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        '
+        'YHighTextBox
+        '
+        Me.YHighTextBox.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.YHighTextBox.Location = New System.Drawing.Point(433, 713)
+        Me.YHighTextBox.Name = "YHighTextBox"
+        Me.YHighTextBox.Size = New System.Drawing.Size(104, 26)
+        Me.YHighTextBox.TabIndex = 10
+        Me.YHighTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        '
+        'YLowTextBox
+        '
+        Me.YLowTextBox.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.YLowTextBox.Location = New System.Drawing.Point(556, 713)
+        Me.YLowTextBox.Name = "YLowTextBox"
+        Me.YLowTextBox.Size = New System.Drawing.Size(99, 26)
+        Me.YLowTextBox.TabIndex = 11
+        Me.YLowTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        '
+        'CurrentTextBox
+        '
+        Me.CurrentTextBox.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.CurrentTextBox.Location = New System.Drawing.Point(193, 651)
+        Me.CurrentTextBox.Name = "CurrentTextBox"
+        Me.CurrentTextBox.Size = New System.Drawing.Size(118, 26)
+        Me.CurrentTextBox.TabIndex = 12
+        Me.CurrentTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        '
+        'CommandTimer
+        '
+        Me.CommandTimer.Interval = 1000
+        '
+        'XFinalTextBox
+        '
+        Me.XFinalTextBox.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.XFinalTextBox.Location = New System.Drawing.Point(679, 651)
+        Me.XFinalTextBox.Name = "XFinalTextBox"
+        Me.XFinalTextBox.Size = New System.Drawing.Size(72, 26)
+        Me.XFinalTextBox.TabIndex = 13
+        Me.XFinalTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        '
+        'YFinalTextBox
+        '
+        Me.YFinalTextBox.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.YFinalTextBox.Location = New System.Drawing.Point(679, 713)
+        Me.YFinalTextBox.Name = "YFinalTextBox"
+        Me.YFinalTextBox.Size = New System.Drawing.Size(72, 26)
+        Me.YFinalTextBox.TabIndex = 14
+        Me.YFinalTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        '
+        'XHighLabel
+        '
+        Me.XHighLabel.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.XHighLabel.AutoSize = True
+        Me.XHighLabel.Font = New System.Drawing.Font("Consolas", 8.0!)
+        Me.XHighLabel.Location = New System.Drawing.Point(429, 630)
+        Me.XHighLabel.Name = "XHighLabel"
+        Me.XHighLabel.Size = New System.Drawing.Size(108, 19)
+        Me.XHighLabel.TabIndex = 15
+        Me.XHighLabel.Text = "X High Byte"
+        '
+        'XLowLabel
+        '
+        Me.XLowLabel.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.XLowLabel.AutoSize = True
+        Me.XLowLabel.Font = New System.Drawing.Font("Consolas", 8.0!)
+        Me.XLowLabel.Location = New System.Drawing.Point(556, 630)
+        Me.XLowLabel.Name = "XLowLabel"
+        Me.XLowLabel.Size = New System.Drawing.Size(99, 19)
+        Me.XLowLabel.TabIndex = 16
+        Me.XLowLabel.Text = "X Low Byte"
+        '
+        'XFinalLabel
+        '
+        Me.XFinalLabel.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.XFinalLabel.AutoSize = True
+        Me.XFinalLabel.Font = New System.Drawing.Font("Consolas", 8.0!)
+        Me.XFinalLabel.Location = New System.Drawing.Point(679, 630)
+        Me.XFinalLabel.Name = "XFinalLabel"
+        Me.XFinalLabel.Size = New System.Drawing.Size(72, 19)
+        Me.XFinalLabel.TabIndex = 17
+        Me.XFinalLabel.Text = "X Value"
+        '
+        'YHighLabel
+        '
+        Me.YHighLabel.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.YHighLabel.AutoSize = True
+        Me.YHighLabel.Font = New System.Drawing.Font("Consolas", 8.0!)
+        Me.YHighLabel.Location = New System.Drawing.Point(429, 690)
+        Me.YHighLabel.Name = "YHighLabel"
+        Me.YHighLabel.Size = New System.Drawing.Size(108, 19)
+        Me.YHighLabel.TabIndex = 18
+        Me.YHighLabel.Text = "Y High Byte"
+        '
+        'YLowLabel
+        '
+        Me.YLowLabel.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.YLowLabel.AutoSize = True
+        Me.YLowLabel.Font = New System.Drawing.Font("Consolas", 8.0!)
+        Me.YLowLabel.Location = New System.Drawing.Point(556, 693)
+        Me.YLowLabel.Name = "YLowLabel"
+        Me.YLowLabel.Size = New System.Drawing.Size(99, 19)
+        Me.YLowLabel.TabIndex = 19
+        Me.YLowLabel.Text = "Y Low Byte"
+        '
+        'YFianlLabel
+        '
+        Me.YFianlLabel.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.YFianlLabel.AutoSize = True
+        Me.YFianlLabel.Font = New System.Drawing.Font("Consolas", 8.0!)
+        Me.YFianlLabel.Location = New System.Drawing.Point(675, 693)
+        Me.YFianlLabel.Name = "YFianlLabel"
+        Me.YFianlLabel.Size = New System.Drawing.Size(72, 19)
+        Me.YFianlLabel.TabIndex = 20
+        Me.YFianlLabel.Text = "Y Value"
+        '
+        'CurrentDataLabel
+        '
+        Me.CurrentDataLabel.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.CurrentDataLabel.AutoSize = True
+        Me.CurrentDataLabel.Font = New System.Drawing.Font("Consolas", 8.0!)
+        Me.CurrentDataLabel.Location = New System.Drawing.Point(194, 630)
+        Me.CurrentDataLabel.Name = "CurrentDataLabel"
+        Me.CurrentDataLabel.Size = New System.Drawing.Size(117, 19)
+        Me.CurrentDataLabel.TabIndex = 21
+        Me.CurrentDataLabel.Text = "Current Data"
+        '
         'Form1
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(9.0!, 20.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(799, 454)
+        Me.ClientSize = New System.Drawing.Size(1402, 764)
+        Me.Controls.Add(Me.CurrentDataLabel)
+        Me.Controls.Add(Me.YFianlLabel)
+        Me.Controls.Add(Me.YLowLabel)
+        Me.Controls.Add(Me.YHighLabel)
+        Me.Controls.Add(Me.XFinalLabel)
+        Me.Controls.Add(Me.XLowLabel)
+        Me.Controls.Add(Me.XHighLabel)
+        Me.Controls.Add(Me.YFinalTextBox)
+        Me.Controls.Add(Me.XFinalTextBox)
+        Me.Controls.Add(Me.CurrentTextBox)
+        Me.Controls.Add(Me.YLowTextBox)
+        Me.Controls.Add(Me.YHighTextBox)
+        Me.Controls.Add(Me.XLowTextBox)
+        Me.Controls.Add(Me.XHighTextBox)
         Me.Controls.Add(Me.RadioGroupBox)
         Me.Controls.Add(Me.Connect_Button)
         Me.Controls.Add(Me.COMPort_ComboBox)
@@ -296,4 +480,20 @@ Partial Class Form1
     Friend WithEvents RadioGroupBox As GroupBox
     Friend WithEvents QBoardRadioButton As RadioButton
     Friend WithEvents MouseRadioButton As RadioButton
+    Friend WithEvents ReadTimer As Timer
+    Friend WithEvents XHighTextBox As TextBox
+    Friend WithEvents XLowTextBox As TextBox
+    Friend WithEvents YHighTextBox As TextBox
+    Friend WithEvents YLowTextBox As TextBox
+    Friend WithEvents CurrentTextBox As TextBox
+    Friend WithEvents CommandTimer As Timer
+    Friend WithEvents XFinalTextBox As TextBox
+    Friend WithEvents YFinalTextBox As TextBox
+    Friend WithEvents XHighLabel As Label
+    Friend WithEvents XLowLabel As Label
+    Friend WithEvents XFinalLabel As Label
+    Friend WithEvents YHighLabel As Label
+    Friend WithEvents YLowLabel As Label
+    Friend WithEvents YFianlLabel As Label
+    Friend WithEvents CurrentDataLabel As Label
 End Class

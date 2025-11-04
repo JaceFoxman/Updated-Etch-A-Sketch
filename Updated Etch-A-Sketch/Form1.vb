@@ -23,6 +23,12 @@ Public Class Form1
             COMPort_ComboBox.Items.Add(port)
         Next
         COMPort_ComboBox.SelectedIndex = 0
+
+        MouseRadioButton.Checked = True
+        QBoardRadioButton.Checked = False
+        ReadTimer.Enabled = False
+        CommandTimer.Enabled = False
+
     End Sub
     'Q@ Board Functions --------------------------------------------------------------------------------
     Sub Connect()
@@ -220,9 +226,82 @@ Public Class Form1
         oldy = e.Y
     End Sub
     Sub DrawWithMouse(oldx As Integer, oldY As Integer, newX As Integer, newY As Integer)
+        If MouseRadioButton.Checked = True Then
+            Dim graphics As Graphics = GraphPictureBox.CreateGraphics
+            Dim pen As New Pen(SetColor)
+            graphics.DrawLine(pen, oldx, oldY, newX, newY)
+            graphics.Dispose()
+        End If
+    End Sub
+    'Draw with Q@ Board__________________________________________________________________________________________
+    Private Sub CommandTimer_Tick(sender As Object, e As EventArgs) Handles CommandTimer.Tick
+        Dim command As Byte() = New Byte(0) {}
+        If QBoardRadioButton.Checked Then
+            command(0) = &H53 'Command to request data from Analog inputs of the Q@ Board
+            CurrentTextBox.Text = "53 sent"
+            SerialPort.Write(command, 0, 1)
+        End If
+    End Sub
+    Private Sub SerialPort_DataReceived(sender As Object, e As SerialDataReceivedEventArgs) Handles SerialPort.DataReceived
+        CheckForIllegalCrossThreadCalls = False
+        Dim incomingData As Integer = SerialPort.BytesToRead
+        'ToolStripStatusLabel.Text = incomingData.ToString
+    End Sub
+    Private Sub ReadTimer_Tick(sender As Object, e As EventArgs) Handles ReadTimer.Tick
+
+        If SerialPort.BytesToRead = 4 Then
+            Dim incomingData(SerialPort.BytesToRead) As Byte
+            Dim value As String
+            SerialPort.Read(incomingData, 0, SerialPort.BytesToRead)
+            For Each dataByte In incomingData
+                value &= $"{CStr(dataByte)},"
+            Next
+            CurrentTextBox.Text = value
+            ' take value and split up into 4 text boxes by ,
+            Dim valueSplit As String() = value.Split(","c)
+
+            Dim xHighSplit As Integer = CInt(valueSplit(0))
+            Dim xLowSplit As Integer = CInt(valueSplit(1))
+            Dim yHighSplit As Integer = CInt(valueSplit(2))
+            Dim yLowSplit As Integer = CInt(valueSplit(3))
+
+            Dim xHighWeighted As Integer = (xHighSplit * 4)
+            Dim xLowWeighted As Integer = (xLowSplit \ 64)
+            Dim xFinal As Integer = xHighWeighted + xLowWeighted
+            Dim yHighWeighted As Integer = (yHighSplit * 4)
+            Dim yLowWeighted As Integer = (yLowSplit \ 64)
+            Dim yFinal As Integer = yHighWeighted + yLowWeighted
+
+            XHighTextBox.Text = xHighWeighted.ToString()
+            XLowTextBox.Text = xLowWeighted.ToString()
+            XFinalTextBox.Text = xFinal.ToString()
+            YHighTextBox.Text = yHighWeighted.ToString
+            YLowTextBox.Text = yLowWeighted.ToString()
+            YFinalTextBox.Text = yFinal.ToString()
+
+            DrawWithQBoard(xFinal, yFinal)
+        End If
+
+    End Sub
+    Sub DrawWithQBoard(x As Integer, y As Integer)
         Dim graphics As Graphics = GraphPictureBox.CreateGraphics
         Dim pen As New Pen(SetColor)
-        graphics.DrawLine(pen, oldx, oldY, newX, newY)
+        pen.Width = 0.25 'fix pen so it is not to thick
+        Static oldx, oldy As Integer
+        Dim scaleX As Single = CSng(GraphPictureBox.Width / 1100)
+        Dim scaleY As Single = CSng((GraphPictureBox.Height / 1100) * -1)  ' Invert Y-axis (makes positive Y go up)
+        graphics.TranslateTransform(0, GraphPictureBox.Height) 'move origin to botton-left
+        graphics.ScaleTransform(scaleX, scaleY) 'scale to 100 x 100 units, invert Y-axis
+        pen.Width = 0.25 'fix pen so it is not to thick
+
+        Dim newX As Integer = x
+        Dim newY As Integer = y
+
+
+        graphics.DrawLine(pen, oldx, oldy, newX, newY)
+        oldy = newY
+        oldx = newX
+
         graphics.Dispose()
     End Sub
     'Event Handlers -------------------------------------------------------------------------------------
@@ -253,6 +332,36 @@ Public Class Form1
                 MessageBox.Show("Please select a COM Port")
         End Select
     End Sub
+    'radio buttons-------------------------------------------------------------------------------------
+    Private Sub MouseRadioButton_CheckedChanged(sender As Object, e As EventArgs) Handles MouseRadioButton.CheckedChanged
+        If MouseRadioButton.Checked Then
+            ReadTimer.Enabled = False
+            CommandTimer.Enabled = False
+            ' clear all the text boxes
+            XHighTextBox.Text = "N/A"
+            XLowTextBox.Text = "N/A"
+            XFinalTextBox.Text = "N/A"
+            YHighTextBox.Text = "N/A"
+            YLowTextBox.Text = "N/A"
+            YFinalTextBox.Text = "N/A"
+            CurrentTextBox.Text = "Mouse Mode"
+        End If
+    End Sub
+    Private Sub QBoardRadioButton_CheckedChanged(sender As Object, e As EventArgs) Handles QBoardRadioButton.CheckedChanged
+        Try 'make sure serial port is open
+            If Not SerialPort.IsOpen Then
+                Connect()
+            End If
+        Catch ex As Exception
+            MessageBox.Show("Please connect to a valid COM Port before selecting Q@ Board mode.")
+            MouseRadioButton.Checked = True
+            Return
+        End Try
+        If QBoardRadioButton.Checked Then
+            ReadTimer.Enabled = True
+            CommandTimer.Enabled = True
+        End If
+    End Sub
     'Menu Items -------------------------------------------------------------------------------------
     Private Sub AboutToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles AboutToolStripMenuItem.Click
         Me.Hide()
@@ -278,3 +387,4 @@ Public Class Form1
         Me.Close()
     End Sub
 End Class
+

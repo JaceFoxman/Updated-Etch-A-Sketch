@@ -1,5 +1,7 @@
 ﻿Option Strict On
 Option Explicit On
+
+Imports System.Threading.Thread 'add to allow sleep function to work
 Public Class Form1
     Dim DataBuffer As New Queue(Of Integer)
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -57,6 +59,32 @@ Public Class Form1
         g.Dispose()
         pen.Dispose()
     End Sub
+
+    Function RNG(min As Integer, max As Integer) As Integer
+        Dim value As Single
+        Randomize()
+        value = Rnd()
+        value *= max - min
+        value += min
+        Return CInt(Math.Ceiling(value))
+    End Function
+
+    Sub ShakeAndClear()
+        Dim movePosition As Integer = RNG(1, 350) 'RNG not nedded just added for randomness on the shake
+        'Try
+        '    My.Computer.Audio.Play(My.Resources.KH_Select, AudioPlayMode.Background)
+        'Catch ex As Exception
+        '    MsgBox("Missing Resources", MsgBoxStyle.Critical, "Error")
+        'End Try
+
+        For i = 1 To 10
+            Me.Top += movePosition
+            Me.Left += movePosition
+            Sleep(100)
+            movePosition *= -1 'need this to bring back to original position
+        Next
+        GraphPictureBox.Refresh()
+    End Sub
     'Event Handlers -------------------------------------------------------------------------------------
     Private Sub ExitButton_Click(sender As Object, e As EventArgs) Handles ExitButton.Click
         Me.Close()
@@ -72,6 +100,6 @@ Public Class Form1
     End Sub
 
     Private Sub ClearButton_Click(sender As Object, e As EventArgs) Handles ClearButton.Click
-
+        ShakeAndClear()
     End Sub
 End Class

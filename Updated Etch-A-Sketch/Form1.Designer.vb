@@ -43,9 +43,13 @@ Partial Class Form1
         Me.SerialPort = New System.IO.Ports.SerialPort(Me.components)
         Me.Connect_Button = New System.Windows.Forms.Button()
         Me.COMPort_ComboBox = New System.Windows.Forms.ComboBox()
+        Me.RadioGroupBox = New System.Windows.Forms.GroupBox()
+        Me.MouseRadioButton = New System.Windows.Forms.RadioButton()
+        Me.QBoardRadioButton = New System.Windows.Forms.RadioButton()
         CType(Me.GraphPictureBox, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.ButtonGroupBox.SuspendLayout()
         Me.TopMenuStrip.SuspendLayout()
+        Me.RadioGroupBox.SuspendLayout()
         Me.SuspendLayout()
         '
         'GraphPictureBox
@@ -63,30 +67,33 @@ Partial Class Form1
         'ColorButton
         '
         Me.ColorButton.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.ColorButton.Font = New System.Drawing.Font("Consolas", 10.0!)
         Me.ColorButton.Location = New System.Drawing.Point(137, 25)
         Me.ColorButton.Name = "ColorButton"
         Me.ColorButton.Size = New System.Drawing.Size(122, 79)
-        Me.ColorButton.TabIndex = 2
+        Me.ColorButton.TabIndex = 7
         Me.ColorButton.Text = "&Select Color"
         Me.ColorButton.UseVisualStyleBackColor = True
         '
         'GraphButton
         '
         Me.GraphButton.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.GraphButton.Font = New System.Drawing.Font("Consolas", 10.0!)
         Me.GraphButton.Location = New System.Drawing.Point(9, 25)
         Me.GraphButton.Name = "GraphButton"
         Me.GraphButton.Size = New System.Drawing.Size(122, 79)
-        Me.GraphButton.TabIndex = 3
+        Me.GraphButton.TabIndex = 6
         Me.GraphButton.Text = "&GRAPH"
         Me.GraphButton.UseVisualStyleBackColor = True
         '
         'ExitButton
         '
         Me.ExitButton.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.ExitButton.Font = New System.Drawing.Font("Consolas", 10.0!)
         Me.ExitButton.Location = New System.Drawing.Point(393, 25)
         Me.ExitButton.Name = "ExitButton"
         Me.ExitButton.Size = New System.Drawing.Size(122, 79)
-        Me.ExitButton.TabIndex = 4
+        Me.ExitButton.TabIndex = 9
         Me.ExitButton.Text = "EXIT"
         Me.ExitButton.UseVisualStyleBackColor = True
         '
@@ -106,19 +113,20 @@ Partial Class Form1
         Me.ButtonGroupBox.Controls.Add(Me.ClearButton)
         Me.ButtonGroupBox.Controls.Add(Me.ExitButton)
         Me.ButtonGroupBox.Controls.Add(Me.GraphButton)
-        Me.ButtonGroupBox.Location = New System.Drawing.Point(266, 314)
+        Me.ButtonGroupBox.Location = New System.Drawing.Point(278, 314)
         Me.ButtonGroupBox.Name = "ButtonGroupBox"
         Me.ButtonGroupBox.Size = New System.Drawing.Size(521, 115)
-        Me.ButtonGroupBox.TabIndex = 6
+        Me.ButtonGroupBox.TabIndex = 5
         Me.ButtonGroupBox.TabStop = False
         '
         'ClearButton
         '
         Me.ClearButton.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.ClearButton.Font = New System.Drawing.Font("Consolas", 10.0!)
         Me.ClearButton.Location = New System.Drawing.Point(265, 25)
         Me.ClearButton.Name = "ClearButton"
         Me.ClearButton.Size = New System.Drawing.Size(122, 79)
-        Me.ClearButton.TabIndex = 5
+        Me.ClearButton.TabIndex = 8
         Me.ClearButton.Text = "&CLEAR"
         Me.ClearButton.UseVisualStyleBackColor = True
         '
@@ -129,7 +137,7 @@ Partial Class Form1
         Me.TopMenuStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.FileToolStripMenuItem, Me.EditToolStripMenuItem, Me.HelpToolStripMenuItem})
         Me.TopMenuStrip.Location = New System.Drawing.Point(0, 0)
         Me.TopMenuStrip.Name = "TopMenuStrip"
-        Me.TopMenuStrip.Size = New System.Drawing.Size(799, 33)
+        Me.TopMenuStrip.Size = New System.Drawing.Size(799, 36)
         Me.TopMenuStrip.TabIndex = 7
         Me.TopMenuStrip.Text = "MenuStrip1"
         '
@@ -137,20 +145,20 @@ Partial Class Form1
         '
         Me.FileToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.EXITToolStripMenuItem})
         Me.FileToolStripMenuItem.Name = "FileToolStripMenuItem"
-        Me.FileToolStripMenuItem.Size = New System.Drawing.Size(54, 29)
+        Me.FileToolStripMenuItem.Size = New System.Drawing.Size(54, 30)
         Me.FileToolStripMenuItem.Text = "&File"
         '
         'EXITToolStripMenuItem
         '
         Me.EXITToolStripMenuItem.Name = "EXITToolStripMenuItem"
-        Me.EXITToolStripMenuItem.Size = New System.Drawing.Size(148, 34)
+        Me.EXITToolStripMenuItem.Size = New System.Drawing.Size(270, 34)
         Me.EXITToolStripMenuItem.Text = "&EXIT"
         '
         'EditToolStripMenuItem
         '
         Me.EditToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.SelectColorToolStripMenuItem, Me.DrawWavefromToolStripMenuItem, Me.ClearToolStripMenuItem})
         Me.EditToolStripMenuItem.Name = "EditToolStripMenuItem"
-        Me.EditToolStripMenuItem.Size = New System.Drawing.Size(58, 29)
+        Me.EditToolStripMenuItem.Size = New System.Drawing.Size(58, 30)
         Me.EditToolStripMenuItem.Text = "&Edit"
         '
         'SelectColorToolStripMenuItem
@@ -175,7 +183,7 @@ Partial Class Form1
         '
         Me.HelpToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.AboutToolStripMenuItem})
         Me.HelpToolStripMenuItem.Name = "HelpToolStripMenuItem"
-        Me.HelpToolStripMenuItem.Size = New System.Drawing.Size(65, 29)
+        Me.HelpToolStripMenuItem.Size = New System.Drawing.Size(65, 30)
         Me.HelpToolStripMenuItem.Text = "&Help"
         '
         'AboutToolStripMenuItem
@@ -191,7 +199,7 @@ Partial Class Form1
         Me.Connect_Button.Location = New System.Drawing.Point(12, 383)
         Me.Connect_Button.Name = "Connect_Button"
         Me.Connect_Button.Size = New System.Drawing.Size(136, 35)
-        Me.Connect_Button.TabIndex = 9
+        Me.Connect_Button.TabIndex = 1
         Me.Connect_Button.Text = "Connect"
         Me.Connect_Button.UseVisualStyleBackColor = False
         '
@@ -202,13 +210,50 @@ Partial Class Form1
         Me.COMPort_ComboBox.Location = New System.Drawing.Point(12, 339)
         Me.COMPort_ComboBox.Name = "COMPort_ComboBox"
         Me.COMPort_ComboBox.Size = New System.Drawing.Size(133, 31)
-        Me.COMPort_ComboBox.TabIndex = 8
+        Me.COMPort_ComboBox.TabIndex = 0
+        '
+        'RadioGroupBox
+        '
+        Me.RadioGroupBox.Controls.Add(Me.QBoardRadioButton)
+        Me.RadioGroupBox.Controls.Add(Me.MouseRadioButton)
+        Me.RadioGroupBox.Font = New System.Drawing.Font("Consolas", 7.0!)
+        Me.RadioGroupBox.Location = New System.Drawing.Point(154, 314)
+        Me.RadioGroupBox.Name = "RadioGroupBox"
+        Me.RadioGroupBox.Size = New System.Drawing.Size(118, 115)
+        Me.RadioGroupBox.TabIndex = 2
+        Me.RadioGroupBox.TabStop = False
+        Me.RadioGroupBox.Text = "Drawing Mode"
+        '
+        'MouseRadioButton
+        '
+        Me.MouseRadioButton.AutoSize = True
+        Me.MouseRadioButton.Font = New System.Drawing.Font("Consolas", 10.0!)
+        Me.MouseRadioButton.Location = New System.Drawing.Point(6, 32)
+        Me.MouseRadioButton.Name = "MouseRadioButton"
+        Me.MouseRadioButton.Size = New System.Drawing.Size(90, 27)
+        Me.MouseRadioButton.TabIndex = 3
+        Me.MouseRadioButton.TabStop = True
+        Me.MouseRadioButton.Text = "&Mouse"
+        Me.MouseRadioButton.UseVisualStyleBackColor = True
+        '
+        'QBoardRadioButton
+        '
+        Me.QBoardRadioButton.AutoSize = True
+        Me.QBoardRadioButton.Font = New System.Drawing.Font("Consolas", 9.0!)
+        Me.QBoardRadioButton.Location = New System.Drawing.Point(6, 74)
+        Me.QBoardRadioButton.Name = "QBoardRadioButton"
+        Me.QBoardRadioButton.Size = New System.Drawing.Size(105, 26)
+        Me.QBoardRadioButton.TabIndex = 4
+        Me.QBoardRadioButton.TabStop = True
+        Me.QBoardRadioButton.Text = "&Q@Board"
+        Me.QBoardRadioButton.UseVisualStyleBackColor = True
         '
         'Form1
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(9.0!, 20.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(799, 454)
+        Me.Controls.Add(Me.RadioGroupBox)
         Me.Controls.Add(Me.Connect_Button)
         Me.Controls.Add(Me.COMPort_ComboBox)
         Me.Controls.Add(Me.ButtonGroupBox)
@@ -222,6 +267,8 @@ Partial Class Form1
         Me.ButtonGroupBox.ResumeLayout(False)
         Me.TopMenuStrip.ResumeLayout(False)
         Me.TopMenuStrip.PerformLayout()
+        Me.RadioGroupBox.ResumeLayout(False)
+        Me.RadioGroupBox.PerformLayout()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -246,4 +293,7 @@ Partial Class Form1
     Friend WithEvents SerialPort As IO.Ports.SerialPort
     Friend WithEvents Connect_Button As Button
     Friend WithEvents COMPort_ComboBox As ComboBox
+    Friend WithEvents RadioGroupBox As GroupBox
+    Friend WithEvents QBoardRadioButton As RadioButton
+    Friend WithEvents MouseRadioButton As RadioButton
 End Class

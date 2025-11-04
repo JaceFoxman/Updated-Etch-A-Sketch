@@ -277,5 +277,4 @@ Public Class Form1
         SerialPort.Close() 'Close Serial Port
         Me.Close()
     End Sub
-
 End Class

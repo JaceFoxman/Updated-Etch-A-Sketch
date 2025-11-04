@@ -1,6 +1,7 @@
 ﻿Option Strict On
 Option Explicit On
 Public Class Form1
+    Dim DataBuffer As New Queue(Of Integer)
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
     End Sub
@@ -15,11 +16,22 @@ Public Class Form1
     Function GetRandomNumber(max%) As Integer
         Randomize()
 
-        Return CInt(System.Math.Floor((Rnd() * (max% + 1))))
+        Return CInt(System.Math.Floor((Rnd() * (max + 1))))
     End Function
-    Function GetData() As Integer
-        Return 5
-    End Function
+    Sub GetData()
+        Dim last%
+        If Me.DataBuffer.Count > 0 Then
+            last = Me.DataBuffer.Last
+        Else
+            last = GetRandomNumberAround(50, 50)
+        End If
+        If DataBuffer.Count >= 100 Then 'keep the queue trimmed to graph x length
+            Me.DataBuffer.Dequeue()
+        End If
+
+        Me.DataBuffer.Enqueue(GetRandomNumberAround(last, 5))
+
+    End Sub
 
     Sub GraphData()
         Dim g As Graphics = GraphPictureBox.CreateGraphics
@@ -30,11 +42,17 @@ Public Class Form1
         Dim scaleX As Single = CSng(GraphPictureBox.Width / 100)
         Dim scaleY As Single = CSng((GraphPictureBox.Height / 100) * -1) ' Invert Y-axis (makes positive Y go up)
 
-        g.TranslateTransform(0, GraphPictureBox.Height)
-        g.ScaleTransform(scaleX, -1)
+        g.TranslateTransform(0, GraphPictureBox.Height) 'move origin to botton-left
+        g.ScaleTransform(scaleX, -1) 'scale to 100 x 100 units, invert Y-axis
+        pen.Width = 0.25 'fix pen so it is not to thick
 
-        pen.Width = 2 / scaleX ' Keep pen width consistent regardless of scaling
-        g.DrawLine(pen, 5, 50, 95, 50)
+        Dim oldY% = 0
+        Dim x = -1
+        For Each y In Me.DataBuffer.Reverse
+            x += 1
+            g.DrawLine(pen, x - 1, oldY, x, y)
+            oldY = y
+        Next
 
         g.Dispose()
         pen.Dispose()
@@ -45,9 +63,15 @@ Public Class Form1
     End Sub
 
     Private Sub GraphButton_Click(sender As Object, e As EventArgs) Handles GraphButton.Click
-        'GraphData()
-        For i = 1 To 100
-            Console.WriteLine(GetRandomNumber(GetRandomNumberAround(50, 10)))
-        Next
+        GetData()
+        GraphData()
+        'For i = 1 To 100
+        '    Console.WriteLine(GetRandomNumber(GetRandomNumberAround(50, 10)))
+        'Next
+        'GetData()
+    End Sub
+
+    Private Sub ClearButton_Click(sender As Object, e As EventArgs) Handles ClearButton.Click
+
     End Sub
 End Class

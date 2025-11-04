@@ -23,13 +23,19 @@ Partial Class Form1
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.GraphPictureBox = New System.Windows.Forms.PictureBox()
-        Me.Button1 = New System.Windows.Forms.Button()
+        Me.ColorButton = New System.Windows.Forms.Button()
         Me.GraphButton = New System.Windows.Forms.Button()
         Me.ExitButton = New System.Windows.Forms.Button()
         Me.StatusStrip = New System.Windows.Forms.StatusStrip()
         Me.ButtonGroupBox = New System.Windows.Forms.GroupBox()
         Me.TopMenuStrip = New System.Windows.Forms.MenuStrip()
         Me.FileToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.EditToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.SelectColorToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.DrawWavefromToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ClearToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.HelpToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ClearButton = New System.Windows.Forms.Button()
         CType(Me.GraphPictureBox, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.ButtonGroupBox.SuspendLayout()
         Me.TopMenuStrip.SuspendLayout()
@@ -41,36 +47,36 @@ Partial Class Form1
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.GraphPictureBox.BackColor = System.Drawing.SystemColors.ActiveCaptionText
-        Me.GraphPictureBox.Location = New System.Drawing.Point(3, 19)
+        Me.GraphPictureBox.Location = New System.Drawing.Point(0, 19)
         Me.GraphPictureBox.Name = "GraphPictureBox"
-        Me.GraphPictureBox.Size = New System.Drawing.Size(784, 289)
+        Me.GraphPictureBox.Size = New System.Drawing.Size(799, 289)
         Me.GraphPictureBox.TabIndex = 1
         Me.GraphPictureBox.TabStop = False
         '
-        'Button1
+        'ColorButton
         '
-        Me.Button1.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Button1.Location = New System.Drawing.Point(6, 25)
-        Me.Button1.Name = "Button1"
-        Me.Button1.Size = New System.Drawing.Size(122, 79)
-        Me.Button1.TabIndex = 2
-        Me.Button1.Text = "Button1"
-        Me.Button1.UseVisualStyleBackColor = True
+        Me.ColorButton.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.ColorButton.Location = New System.Drawing.Point(137, 25)
+        Me.ColorButton.Name = "ColorButton"
+        Me.ColorButton.Size = New System.Drawing.Size(122, 79)
+        Me.ColorButton.TabIndex = 2
+        Me.ColorButton.Text = "&Select Color"
+        Me.ColorButton.UseVisualStyleBackColor = True
         '
         'GraphButton
         '
         Me.GraphButton.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.GraphButton.Location = New System.Drawing.Point(134, 25)
+        Me.GraphButton.Location = New System.Drawing.Point(9, 25)
         Me.GraphButton.Name = "GraphButton"
         Me.GraphButton.Size = New System.Drawing.Size(122, 79)
         Me.GraphButton.TabIndex = 3
-        Me.GraphButton.Text = "GRAPH"
+        Me.GraphButton.Text = "&GRAPH"
         Me.GraphButton.UseVisualStyleBackColor = True
         '
         'ExitButton
         '
         Me.ExitButton.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.ExitButton.Location = New System.Drawing.Point(263, 25)
+        Me.ExitButton.Location = New System.Drawing.Point(393, 25)
         Me.ExitButton.Name = "ExitButton"
         Me.ExitButton.Size = New System.Drawing.Size(122, 79)
         Me.ExitButton.TabIndex = 4
@@ -89,12 +95,13 @@ Partial Class Form1
         'ButtonGroupBox
         '
         Me.ButtonGroupBox.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.ButtonGroupBox.Controls.Add(Me.ColorButton)
+        Me.ButtonGroupBox.Controls.Add(Me.ClearButton)
         Me.ButtonGroupBox.Controls.Add(Me.ExitButton)
-        Me.ButtonGroupBox.Controls.Add(Me.Button1)
         Me.ButtonGroupBox.Controls.Add(Me.GraphButton)
-        Me.ButtonGroupBox.Location = New System.Drawing.Point(396, 314)
+        Me.ButtonGroupBox.Location = New System.Drawing.Point(266, 314)
         Me.ButtonGroupBox.Name = "ButtonGroupBox"
-        Me.ButtonGroupBox.Size = New System.Drawing.Size(391, 115)
+        Me.ButtonGroupBox.Size = New System.Drawing.Size(521, 115)
         Me.ButtonGroupBox.TabIndex = 6
         Me.ButtonGroupBox.TabStop = False
         '
@@ -102,10 +109,10 @@ Partial Class Form1
         '
         Me.TopMenuStrip.GripMargin = New System.Windows.Forms.Padding(2, 2, 0, 2)
         Me.TopMenuStrip.ImageScalingSize = New System.Drawing.Size(24, 24)
-        Me.TopMenuStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.FileToolStripMenuItem})
+        Me.TopMenuStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.FileToolStripMenuItem, Me.EditToolStripMenuItem, Me.HelpToolStripMenuItem})
         Me.TopMenuStrip.Location = New System.Drawing.Point(0, 0)
         Me.TopMenuStrip.Name = "TopMenuStrip"
-        Me.TopMenuStrip.Size = New System.Drawing.Size(799, 36)
+        Me.TopMenuStrip.Size = New System.Drawing.Size(799, 33)
         Me.TopMenuStrip.TabIndex = 7
         Me.TopMenuStrip.Text = "MenuStrip1"
         '
@@ -114,6 +121,47 @@ Partial Class Form1
         Me.FileToolStripMenuItem.Name = "FileToolStripMenuItem"
         Me.FileToolStripMenuItem.Size = New System.Drawing.Size(54, 29)
         Me.FileToolStripMenuItem.Text = "&File"
+        '
+        'EditToolStripMenuItem
+        '
+        Me.EditToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.SelectColorToolStripMenuItem, Me.DrawWavefromToolStripMenuItem, Me.ClearToolStripMenuItem})
+        Me.EditToolStripMenuItem.Name = "EditToolStripMenuItem"
+        Me.EditToolStripMenuItem.Size = New System.Drawing.Size(58, 29)
+        Me.EditToolStripMenuItem.Text = "&Edit"
+        '
+        'SelectColorToolStripMenuItem
+        '
+        Me.SelectColorToolStripMenuItem.Name = "SelectColorToolStripMenuItem"
+        Me.SelectColorToolStripMenuItem.Size = New System.Drawing.Size(270, 34)
+        Me.SelectColorToolStripMenuItem.Text = "Select Color"
+        '
+        'DrawWavefromToolStripMenuItem
+        '
+        Me.DrawWavefromToolStripMenuItem.Name = "DrawWavefromToolStripMenuItem"
+        Me.DrawWavefromToolStripMenuItem.Size = New System.Drawing.Size(270, 34)
+        Me.DrawWavefromToolStripMenuItem.Text = "Draw Wavefrom"
+        '
+        'ClearToolStripMenuItem
+        '
+        Me.ClearToolStripMenuItem.Name = "ClearToolStripMenuItem"
+        Me.ClearToolStripMenuItem.Size = New System.Drawing.Size(270, 34)
+        Me.ClearToolStripMenuItem.Text = "Clear"
+        '
+        'HelpToolStripMenuItem
+        '
+        Me.HelpToolStripMenuItem.Name = "HelpToolStripMenuItem"
+        Me.HelpToolStripMenuItem.Size = New System.Drawing.Size(65, 29)
+        Me.HelpToolStripMenuItem.Text = "&Help"
+        '
+        'ClearButton
+        '
+        Me.ClearButton.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.ClearButton.Location = New System.Drawing.Point(265, 25)
+        Me.ClearButton.Name = "ClearButton"
+        Me.ClearButton.Size = New System.Drawing.Size(122, 79)
+        Me.ClearButton.TabIndex = 5
+        Me.ClearButton.Text = "&CLEAR"
+        Me.ClearButton.UseVisualStyleBackColor = True
         '
         'Form1
         '
@@ -136,11 +184,17 @@ Partial Class Form1
 
     End Sub
     Friend WithEvents GraphPictureBox As PictureBox
-    Friend WithEvents Button1 As Button
+    Friend WithEvents ColorButton As Button
     Friend WithEvents GraphButton As Button
     Friend WithEvents ExitButton As Button
     Friend WithEvents StatusStrip As StatusStrip
     Friend WithEvents ButtonGroupBox As GroupBox
     Friend WithEvents TopMenuStrip As MenuStrip
     Friend WithEvents FileToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents ClearButton As Button
+    Friend WithEvents EditToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents SelectColorToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents DrawWavefromToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents ClearToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents HelpToolStripMenuItem As ToolStripMenuItem
 End Class

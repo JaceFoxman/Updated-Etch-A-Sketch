@@ -13,24 +13,27 @@ Option Compare Text
 Imports System.IO.Ports
 Imports System.Threading.Thread 'add to allow sleep function to work
 Public Class Form1
-    Dim DataBuffer As New Queue(Of Integer)
-    'Initialize Form ---------------------------------------------------------------------------------
+    'Initialize Form -------------------------------------------------------------------------------------
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         SetDefaults()
     End Sub
     Sub SetDefaults()
-        For Each port In SerialPort.GetPortNames()
-            COMPort_ComboBox.Items.Add(port)
-        Next
-        COMPort_ComboBox.SelectedIndex = 0
+        Try
+            For Each port In SerialPort.GetPortNames()
+                COMPort_ComboBox.Items.Add(port)
+            Next
+            COMPort_ComboBox.SelectedIndex = 0
+        Catch ex As Exception
+            'No COM Ports found
+            MessageBox.Show("No COM Ports found. Please connect the Q@ Board and restart the application.")
+        End Try
 
         MouseRadioButton.Checked = True
         QBoardRadioButton.Checked = False
         ReadTimer.Enabled = False
         CommandTimer.Enabled = False
-
     End Sub
-    'Q@ Board Functions --------------------------------------------------------------------------------
+    'Serial Connection -----------------------------------------------------------------------------------
     Sub Connect()
 
         Try
@@ -41,7 +44,6 @@ Public Class Form1
             SerialPort.StopBits = IO.Ports.StopBits.One    '1 Stop Bit
             SerialPort.DataBits = 8    '8 Data Bits
             SerialPort.PortName = comPort 'Change to your COM Port
-
 
             SerialPort.Open()  'Open Serial Port
             If SerialPort.IsOpen Then  'Check if Serial Port is open
@@ -54,7 +56,6 @@ Public Class Form1
 
             Return
         End Try
-
     End Sub
     'Setting and Getting Color ---------------------------------------------------------------------------
     Function SetColor(Optional newColor As Color = Nothing) As Color
@@ -70,7 +71,7 @@ Public Class Form1
         SetColor(ColorDialog.Color)
         Return SetColor()
     End Function
-    'Program Logic --------------------------------------------------------------------------------------
+    'Program Logic ---------------------------------------------------------------------------------------
     Function GetRandomNumberAround(thisNumber%, Optional within% = 10) As Integer
         Dim result%
         result = thisNumber - within
@@ -79,47 +80,8 @@ Public Class Form1
     End Function
     Function GetRandomNumber(max%) As Integer
         Randomize()
-
         Return CInt(System.Math.Floor((Rnd() * (max + 1))))
     End Function
-    Sub GetData()
-        Dim last%
-        If Me.DataBuffer.Count > 0 Then
-            last = Me.DataBuffer.Last
-        Else
-            last = GetRandomNumberAround(50, 50)
-        End If
-        If DataBuffer.Count >= 100 Then 'keep the queue trimmed to graph x length
-            Me.DataBuffer.Dequeue()
-        End If
-
-        Me.DataBuffer.Enqueue(GetRandomNumberAround(last, 5))
-
-    End Sub
-    Sub GraphData()
-        Dim g As Graphics = GraphPictureBox.CreateGraphics
-        Dim pen As New Pen(Color.Purple)
-        ' Define scaling factors to map 0-100 data range to PictureBox dimensions
-        ' scaleX and scaleY convert data points to pixel coordinates (100 units to PictureBox size)
-        ' 100 units chosen for simplicity; adjust as needed for actual data range
-        Dim scaleX As Single = CSng(GraphPictureBox.Width / 100)
-        Dim scaleY As Single = CSng((GraphPictureBox.Height / 100) * -1) ' Invert Y-axis (makes positive Y go up)
-
-        g.TranslateTransform(0, GraphPictureBox.Height) 'move origin to botton-left
-        g.ScaleTransform(scaleX, -1) 'scale to 100 x 100 units, invert Y-axis
-        pen.Width = 0.25 'fix pen so it is not to thick
-
-        Dim oldY% = 0
-        Dim x = -1
-        For Each y In Me.DataBuffer.Reverse
-            x += 1
-            g.DrawLine(pen, x - 1, oldY, x, y)
-            oldY = y
-        Next
-
-        g.Dispose()
-        pen.Dispose()
-    End Sub
     Function RNG(min As Integer, max As Integer) As Integer
         Dim value As Single
         Randomize()
@@ -213,7 +175,6 @@ Public Class Form1
     'Draw with mouse_____________________________________________________________________________________________
     Private Sub GraphPictureBox_MouseMove(sender As Object, e As MouseEventArgs) Handles GraphPictureBox.MouseMove
         Static oldx, oldy As Integer
-
         Select Case e.Button.ToString
             Case "Left"
                 DrawWithMouse(oldx, oldy, e.X, e.Y)
@@ -245,7 +206,6 @@ Public Class Form1
     Private Sub SerialPort_DataReceived(sender As Object, e As SerialDataReceivedEventArgs) Handles SerialPort.DataReceived
         CheckForIllegalCrossThreadCalls = False
         Dim incomingData As Integer = SerialPort.BytesToRead
-        'ToolStripStatusLabel.Text = incomingData.ToString
     End Sub
     Private Sub ReadTimer_Tick(sender As Object, e As EventArgs) Handles ReadTimer.Tick
 
@@ -257,7 +217,7 @@ Public Class Form1
                 value &= $"{CStr(dataByte)},"
             Next
             CurrentTextBox.Text = value
-            ' take value and split up into 4 text boxes by ,
+
             Dim valueSplit As String() = value.Split(","c)
 
             Dim xHighSplit As Integer = CInt(valueSplit(0))
@@ -297,40 +257,11 @@ Public Class Form1
         Dim newX As Integer = x
         Dim newY As Integer = y
 
-
         graphics.DrawLine(pen, oldx, oldy, newX, newY)
         oldy = newY
         oldx = newX
 
         graphics.Dispose()
-    End Sub
-    'Event Handlers -------------------------------------------------------------------------------------
-    Private Sub ExitButton_Click(sender As Object, e As EventArgs) Handles ExitButton.Click
-        SerialPort.Close() 'Close Serial Port
-        Me.Close()
-    End Sub
-    Private Sub GraphButton_Click(sender As Object, e As EventArgs) Handles GraphButton.Click
-        'GetData()
-        'GraphData()
-        ShakeAndClear()
-        Graticules()
-        SineWave()
-        CosineWave()
-        TangentWave()
-    End Sub
-    Private Sub ClearButton_Click(sender As Object, e As EventArgs) Handles ClearButton.Click
-        ShakeAndClear()
-    End Sub
-    Private Sub ColorButton_Click(sender As Object, e As EventArgs) Handles ColorButton.Click
-        DialogBox()
-    End Sub
-    Private Sub Connect_Button_Click(sender As Object, e As EventArgs) Handles Connect_Button.Click
-        Select Case COMPort_ComboBox.Text <> ""  'Wait for COM Port Selection
-            Case True
-                Connect()   'Connect to Serial Port
-            Case False
-                MessageBox.Show("Please select a COM Port")
-        End Select
     End Sub
     'radio buttons-------------------------------------------------------------------------------------
     Private Sub MouseRadioButton_CheckedChanged(sender As Object, e As EventArgs) Handles MouseRadioButton.CheckedChanged
@@ -362,6 +293,32 @@ Public Class Form1
             CommandTimer.Enabled = True
         End If
     End Sub
+    'Event Handlers -------------------------------------------------------------------------------------
+    Private Sub ExitButton_Click(sender As Object, e As EventArgs) Handles ExitButton.Click
+        SerialPort.Close() 'Close Serial Port
+        Me.Close()
+    End Sub
+    Private Sub GraphButton_Click(sender As Object, e As EventArgs) Handles GraphButton.Click
+        ShakeAndClear()
+        Graticules()
+        SineWave()
+        CosineWave()
+        TangentWave()
+    End Sub
+    Private Sub ClearButton_Click(sender As Object, e As EventArgs) Handles ClearButton.Click
+        ShakeAndClear()
+    End Sub
+    Private Sub ColorButton_Click(sender As Object, e As EventArgs) Handles ColorButton.Click
+        DialogBox()
+    End Sub
+    Private Sub Connect_Button_Click(sender As Object, e As EventArgs) Handles Connect_Button.Click
+        Select Case COMPort_ComboBox.Text <> ""  'Wait for COM Port Selection
+            Case True
+                Connect()   'Connect to Serial Port
+            Case False
+                MessageBox.Show("Please select a COM Port")
+        End Select
+    End Sub
     'Menu Items -------------------------------------------------------------------------------------
     Private Sub AboutToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles AboutToolStripMenuItem.Click
         Me.Hide()
@@ -371,8 +328,6 @@ Public Class Form1
         ShakeAndClear()
     End Sub
     Private Sub DrawWavefromToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles DrawWavefromToolStripMenuItem.Click
-        'GetData()
-        'GraphData()
         ShakeAndClear()
         Graticules()
         SineWave()

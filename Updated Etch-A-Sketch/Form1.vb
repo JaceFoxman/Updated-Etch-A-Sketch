@@ -17,6 +17,9 @@ Public Class Form1
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         SetDefaults()
     End Sub
+    ''' <summary>
+    ''' Set Default Values on Form Load
+    ''' </summary>
     Sub SetDefaults()
         Try
             For Each port In SerialPort.GetPortNames()
@@ -34,6 +37,9 @@ Public Class Form1
         CommandTimer.Enabled = False
     End Sub
     'Serial Connection -----------------------------------------------------------------------------------
+    ''' <summary>
+    '''  Connect to Serial Port
+    ''' </summary>
     Sub Connect()
 
         Try
@@ -58,6 +64,11 @@ Public Class Form1
         End Try
     End Sub
     'Setting and Getting Color ---------------------------------------------------------------------------
+    ''' <summary>
+    ''' Set or Get Drawing Color
+    ''' </summary>
+    ''' <param name="newColor"></param>
+    ''' <returns></returns>
     Function SetColor(Optional newColor As Color = Nothing) As Color
         Static _forecolor As Color = Color.White
         If newColor <> Nothing Then
@@ -65,6 +76,10 @@ Public Class Form1
         End If
         Return _forecolor
     End Function
+    ''' <summary>
+    ''' Open Color Dialog Box
+    ''' </summary>
+    ''' <returns></returns>
     Function DialogBox() As Color
         'Make sure to add the tool "Color Dialog Box" added to front pannel to work
         ColorDialog.ShowDialog()
@@ -72,16 +87,33 @@ Public Class Form1
         Return SetColor()
     End Function
     'Program Logic ---------------------------------------------------------------------------------------
+    ''' <summary>
+    ''' Get Random Number Around a Given Number
+    ''' </summary>
+    ''' <param name="thisNumber%"></param>
+    ''' <param name="within%"></param>
+    ''' <returns></returns>
     Function GetRandomNumberAround(thisNumber%, Optional within% = 10) As Integer
         Dim result%
         result = thisNumber - within
         result += GetRandomNumber(within) + GetRandomNumber(within)
         Return result
     End Function
+    ''' <summary>
+    ''' Get Random Number up to a Given Max
+    ''' </summary>
+    ''' <param name="max%"></param>
+    ''' <returns></returns>
     Function GetRandomNumber(max%) As Integer
         Randomize()
         Return CInt(System.Math.Floor((Rnd() * (max + 1))))
     End Function
+    ''' <summary>
+    ''' Get Random Number between Min and Max
+    ''' </summary>
+    ''' <param name="min"></param>
+    ''' <param name="max"></param>
+    ''' <returns></returns>
     Function RNG(min As Integer, max As Integer) As Integer
         Dim value As Single
         Randomize()
@@ -90,6 +122,9 @@ Public Class Form1
         value += min
         Return CInt(Math.Ceiling(value))
     End Function
+    ''' <summary>
+    ''' Shake the Form and Clear the Drawing Area
+    ''' </summary>
     Sub ShakeAndClear()
         Dim movePosition As Integer = RNG(1, 350) 'RNG not nedded just added for randomness on the shake
         Try
@@ -106,6 +141,9 @@ Public Class Form1
         Next
         GraphPictureBox.Refresh()
     End Sub
+    ''' <summary>
+    ''' Draw Graticules on Drawing Area
+    ''' </summary>
     Sub Graticules()
         Dim graphics As Graphics = GraphPictureBox.CreateGraphics
         Dim pen As New Pen(Color.Black)
@@ -122,6 +160,9 @@ Public Class Form1
             graphics.DrawLine(pen, x, 0, x, GraphPictureBox.Height)
         Loop
     End Sub
+    ''' <summary>
+    ''' Draw Sine Wave on Drawing Area
+    ''' </summary>
     Sub SineWave()
         Dim graphics As Graphics = GraphPictureBox.CreateGraphics
         Dim pen As New Pen(Color.Green)
@@ -137,6 +178,9 @@ Public Class Form1
             oldy = newy
         Next
     End Sub
+    ''' <summary>
+    ''' Draw Cosine Wave on Drawing Area
+    ''' </summary>
     Sub CosineWave()
         Dim graphics As Graphics = GraphPictureBox.CreateGraphics
         Dim pen As New Pen(Color.Blue)
@@ -152,6 +196,9 @@ Public Class Form1
             oldy = newy
         Next
     End Sub
+    ''' <summary>
+    ''' Draw Tangent Wave on Drawing Area
+    ''' </summary>
     Sub TangentWave()
         Dim graphics As Graphics = GraphPictureBox.CreateGraphics
         Dim pen As New Pen(Color.Red)
@@ -195,6 +242,11 @@ Public Class Form1
         End If
     End Sub
     'Draw with Q@ Board__________________________________________________________________________________________
+    ''' <summary>
+    ''' Event Handler for Command Timer Tick
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
     Private Sub CommandTimer_Tick(sender As Object, e As EventArgs) Handles CommandTimer.Tick
         Dim command As Byte() = New Byte(0) {}
         If QBoardRadioButton.Checked Then
@@ -203,67 +255,86 @@ Public Class Form1
             SerialPort.Write(command, 0, 1)
         End If
     End Sub
+    ''' <summary>
+    ''' Event Handler for Serial Port Data Received
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
     Private Sub SerialPort_DataReceived(sender As Object, e As SerialDataReceivedEventArgs) Handles SerialPort.DataReceived
-        CheckForIllegalCrossThreadCalls = False
-        Dim incomingData As Integer = SerialPort.BytesToRead
+        CheckForIllegalCrossThreadCalls = False 'disable cross-thread checking
+        Dim incomingData As Integer = SerialPort.BytesToRead    'get number of bytes to read
     End Sub
+    ''' <summary>
+    ''' Read incoming data from Q@ Board
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
     Private Sub ReadTimer_Tick(sender As Object, e As EventArgs) Handles ReadTimer.Tick
 
         If SerialPort.BytesToRead = 4 Then
-            Dim incomingData(SerialPort.BytesToRead) As Byte
-            Dim value As String
-            SerialPort.Read(incomingData, 0, SerialPort.BytesToRead)
-            For Each dataByte In incomingData
-                value &= $"{CStr(dataByte)},"
+            Dim incomingData(SerialPort.BytesToRead) As Byte    'create byte array to hold incoming data
+            Dim value As String 'store incoming data as string
+            SerialPort.Read(incomingData, 0, SerialPort.BytesToRead)    'read incoming data
+            For Each dataByte In incomingData   'loop through incoming data bytes
+                value &= $"{CStr(dataByte)},"   'build string of incoming data
             Next
-            CurrentTextBox.Text = value
+            CurrentTextBox.Text = value 'display raw incoming data
 
-            Dim valueSplit As String() = value.Split(","c)
+            Dim valueSplit As String() = value.Split(","c)  'split incoming data into array
 
-            Dim xHighSplit As Integer = CInt(valueSplit(0))
-            Dim xLowSplit As Integer = CInt(valueSplit(1))
-            Dim yHighSplit As Integer = CInt(valueSplit(2))
-            Dim yLowSplit As Integer = CInt(valueSplit(3))
+            Dim xHighSplit As Integer = CInt(valueSplit(0)) 'get x high byte
+            Dim xLowSplit As Integer = CInt(valueSplit(1))  'get x low byte
+            Dim yHighSplit As Integer = CInt(valueSplit(2)) 'get y high byte
+            Dim yLowSplit As Integer = CInt(valueSplit(3))  'get y low byte
 
-            Dim xHighWeighted As Integer = (xHighSplit * 4)
-            Dim xLowWeighted As Integer = (xLowSplit \ 64)
-            Dim xFinal As Integer = xHighWeighted + xLowWeighted
-            Dim yHighWeighted As Integer = (yHighSplit * 4)
-            Dim yLowWeighted As Integer = (yLowSplit \ 64)
-            Dim yFinal As Integer = yHighWeighted + yLowWeighted
+            Dim xHighWeighted As Integer = (xHighSplit * 4) 'weight high byte
+            Dim xLowWeighted As Integer = (xLowSplit \ 64)  'weight low byte
+            Dim xFinal As Integer = xHighWeighted + xLowWeighted    'final x value
+            Dim yHighWeighted As Integer = (yHighSplit * 4) 'weight high byte
+            Dim yLowWeighted As Integer = (yLowSplit \ 64)  'weight low byte
+            Dim yFinal As Integer = yHighWeighted + yLowWeighted    'final y value
 
-            XHighTextBox.Text = xHighWeighted.ToString()
-            XLowTextBox.Text = xLowWeighted.ToString()
-            XFinalTextBox.Text = xFinal.ToString()
-            YHighTextBox.Text = yHighWeighted.ToString
-            YLowTextBox.Text = yLowWeighted.ToString()
-            YFinalTextBox.Text = yFinal.ToString()
+            XHighTextBox.Text = xHighWeighted.ToString()    'display weighted high byte
+            XLowTextBox.Text = xLowWeighted.ToString()      'display weighted low byte
+            XFinalTextBox.Text = xFinal.ToString()          'display final x value
+            YHighTextBox.Text = yHighWeighted.ToString      'display weighted high byte
+            YLowTextBox.Text = yLowWeighted.ToString()      'display weighted low byte
+            YFinalTextBox.Text = yFinal.ToString()          'display final y value
 
-            DrawWithQBoard(xFinal, yFinal)
+            DrawWithQBoard(xFinal, yFinal)  'draw with Q@ Board values
         End If
 
     End Sub
+    ''' <summary>
+    ''' Draw with Q@ Board values
+    ''' </summary>
+    ''' <param name="x"></param>
+    ''' <param name="y"></param>
     Sub DrawWithQBoard(x As Integer, y As Integer)
-        Dim graphics As Graphics = GraphPictureBox.CreateGraphics
-        Dim pen As New Pen(SetColor)
-        pen.Width = 0.25 'fix pen so it is not to thick
-        Static oldx, oldy As Integer
-        Dim scaleX As Single = CSng(GraphPictureBox.Width / 1100)
-        Dim scaleY As Single = CSng((GraphPictureBox.Height / 1100) * -1)  ' Invert Y-axis (makes positive Y go up)
+        Dim graphics As Graphics = GraphPictureBox.CreateGraphics   'create graphics object
+        Dim pen As New Pen(SetColor)    'set pen to selected color
+        pen.Width = 0.25    'fix pen so it is not to thick
+        Static oldx, oldy As Integer    'store old x and y positions
+        Dim scaleX As Single = CSng(GraphPictureBox.Width / 1100)   'Scale x to 1100 units (max value from Q@ Board is about 1014)
+        Dim scaleY As Single = CSng((GraphPictureBox.Height / 1100) * -1)  ' Scale y to 1100 units (max value from Q@ Board is about 1014) / Invert Y-axis (makes positive Y go up)
         graphics.TranslateTransform(0, GraphPictureBox.Height) 'move origin to botton-left
-        graphics.ScaleTransform(scaleX, scaleY) 'scale to 100 x 100 units, invert Y-axis
-        pen.Width = 0.25 'fix pen so it is not to thick
+        graphics.ScaleTransform(scaleX, scaleY) 'scale to 1100 x 1100 units, invert Y-axis
 
-        Dim newX As Integer = x
-        Dim newY As Integer = y
+        Dim newX As Integer = x 'scaleX
+        Dim newY As Integer = y 'scaleY
 
-        graphics.DrawLine(pen, oldx, oldy, newX, newY)
-        oldy = newY
-        oldx = newX
+        graphics.DrawLine(pen, oldx, oldy, newX, newY)  'draw line from old to new position
+        oldy = newY 'update oldy to newY
+        oldx = newX 'update oldx to newX
 
-        graphics.Dispose()
+        graphics.Dispose()  'free graphics object
     End Sub
     'radio buttons-------------------------------------------------------------------------------------
+    ''' <summary>
+    ''' Swithc to Mouse Drawing Mode
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
     Private Sub MouseRadioButton_CheckedChanged(sender As Object, e As EventArgs) Handles MouseRadioButton.CheckedChanged
         If MouseRadioButton.Checked Then
             ReadTimer.Enabled = False
@@ -278,6 +349,11 @@ Public Class Form1
             CurrentTextBox.Text = "Mouse Mode"
         End If
     End Sub
+    ''' <summary>
+    ''' Switch to Q@ Board Drawing Mode
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
     Private Sub QBoardRadioButton_CheckedChanged(sender As Object, e As EventArgs) Handles QBoardRadioButton.CheckedChanged
         Try 'make sure serial port is open
             If Not SerialPort.IsOpen Then

@@ -3,6 +3,7 @@
 'RCET 3371
 'Updated Etch-A-Sketch
 'https://github.com/JaceFoxman/Updated-Etch-A-Sketch.git
+
 Option Strict On
 Option Explicit On
 Option Compare Text

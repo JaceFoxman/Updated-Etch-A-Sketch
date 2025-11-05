@@ -31,9 +31,10 @@ Partial Class About
         Me.AboutLabel.Font = New System.Drawing.Font("Consolas", 22.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.AboutLabel.Location = New System.Drawing.Point(12, 9)
         Me.AboutLabel.Name = "AboutLabel"
-        Me.AboutLabel.Size = New System.Drawing.Size(767, 299)
+        Me.AboutLabel.Size = New System.Drawing.Size(767, 429)
         Me.AboutLabel.TabIndex = 2
         Me.AboutLabel.Text = "Updated Etch-A-Sketch" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "By: Jason Permann" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "Fall 2025" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10)
+        Me.AboutLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'ReturnButton
         '

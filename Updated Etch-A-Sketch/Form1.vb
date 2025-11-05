@@ -32,7 +32,7 @@ Public Class Form1
         End Try
 
         MouseRadioButton.Checked = True
-        QBoardRadioButton.Checked = False
+        QBoardRadioButton.Enabled = False
         ReadTimer.Enabled = False
         CommandTimer.Enabled = False
     End Sub
@@ -41,7 +41,6 @@ Public Class Form1
     '''  Connect to Serial Port
     ''' </summary>
     Sub Connect()
-
         Try
             Dim comPort As String = COMPort_ComboBox.Text
             SerialPort.Close()
@@ -54,12 +53,12 @@ Public Class Form1
             SerialPort.Open()  'Open Serial Port
             If SerialPort.IsOpen Then  'Check if Serial Port is open
                 MessageBox.Show("Connected to " & SerialPort.PortName) 'Show message if connected
+                QBoardRadioButton.Enabled = True
             End If
 
         Catch ex As Exception
             'Show error message if port is invalid
             MessageBox.Show("Error: " & ex.Message)
-
             Return
         End Try
     End Sub
@@ -270,7 +269,6 @@ Public Class Form1
     ''' <param name="sender"></param>
     ''' <param name="e"></param>
     Private Sub ReadTimer_Tick(sender As Object, e As EventArgs) Handles ReadTimer.Tick
-
         If SerialPort.BytesToRead = 4 Then
             Dim incomingData(SerialPort.BytesToRead) As Byte    'create byte array to hold incoming data
             Dim value As String 'store incoming data as string
@@ -355,19 +353,8 @@ Public Class Form1
     ''' <param name="sender"></param>
     ''' <param name="e"></param>
     Private Sub QBoardRadioButton_CheckedChanged(sender As Object, e As EventArgs) Handles QBoardRadioButton.CheckedChanged
-        Try 'make sure serial port is open
-            If Not SerialPort.IsOpen Then
-                Connect()
-            End If
-        Catch ex As Exception
-            MessageBox.Show("Please connect to a valid COM Port before selecting Q@ Board mode.")
-            MouseRadioButton.Checked = True
-            Return
-        End Try
-        If QBoardRadioButton.Checked Then
-            ReadTimer.Enabled = True
-            CommandTimer.Enabled = True
-        End If
+        ReadTimer.Enabled = True
+        CommandTimer.Enabled = True
     End Sub
     'Event Handlers -------------------------------------------------------------------------------------
     Private Sub ExitButton_Click(sender As Object, e As EventArgs) Handles ExitButton.Click

@@ -167,7 +167,7 @@ Partial Class Form1
         'EXITToolStripMenuItem
         '
         Me.EXITToolStripMenuItem.Name = "EXITToolStripMenuItem"
-        Me.EXITToolStripMenuItem.Size = New System.Drawing.Size(270, 34)
+        Me.EXITToolStripMenuItem.Size = New System.Drawing.Size(148, 34)
         Me.EXITToolStripMenuItem.Text = "&EXIT"
         Me.EXITToolStripMenuItem.ToolTipText = "Close Program"
         '
@@ -181,21 +181,21 @@ Partial Class Form1
         'SelectColorToolStripMenuItem
         '
         Me.SelectColorToolStripMenuItem.Name = "SelectColorToolStripMenuItem"
-        Me.SelectColorToolStripMenuItem.Size = New System.Drawing.Size(270, 34)
+        Me.SelectColorToolStripMenuItem.Size = New System.Drawing.Size(242, 34)
         Me.SelectColorToolStripMenuItem.Text = "Select Color"
         Me.SelectColorToolStripMenuItem.ToolTipText = "Open color select window"
         '
         'DrawWavefromToolStripMenuItem
         '
         Me.DrawWavefromToolStripMenuItem.Name = "DrawWavefromToolStripMenuItem"
-        Me.DrawWavefromToolStripMenuItem.Size = New System.Drawing.Size(270, 34)
+        Me.DrawWavefromToolStripMenuItem.Size = New System.Drawing.Size(242, 34)
         Me.DrawWavefromToolStripMenuItem.Text = "Draw Wavefrom"
         Me.DrawWavefromToolStripMenuItem.ToolTipText = "Graph Sine,Cosine,Tangent waveform"
         '
         'ClearToolStripMenuItem
         '
         Me.ClearToolStripMenuItem.Name = "ClearToolStripMenuItem"
-        Me.ClearToolStripMenuItem.Size = New System.Drawing.Size(270, 34)
+        Me.ClearToolStripMenuItem.Size = New System.Drawing.Size(242, 34)
         Me.ClearToolStripMenuItem.Text = "Clear"
         Me.ClearToolStripMenuItem.ToolTipText = "Clear the drawing area"
         '
@@ -209,7 +209,7 @@ Partial Class Form1
         'AboutToolStripMenuItem
         '
         Me.AboutToolStripMenuItem.Name = "AboutToolStripMenuItem"
-        Me.AboutToolStripMenuItem.Size = New System.Drawing.Size(270, 34)
+        Me.AboutToolStripMenuItem.Size = New System.Drawing.Size(164, 34)
         Me.AboutToolStripMenuItem.Text = "&About"
         Me.AboutToolStripMenuItem.ToolTipText = "Open the About Form"
         '
@@ -462,7 +462,7 @@ Partial Class Form1
         Me.Controls.Add(Me.GraphPictureBox)
         Me.MainMenuStrip = Me.TopMenuStrip
         Me.Name = "Form1"
-        Me.Text = "Form1"
+        Me.Text = "Etch-A-Sketch"
         CType(Me.GraphPictureBox, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ButtonGroupBox.ResumeLayout(False)
         Me.TopMenuStrip.ResumeLayout(False)

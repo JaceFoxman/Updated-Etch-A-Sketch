@@ -146,7 +146,7 @@ Public Class Form1
     ''' </summary>
     Sub Graticules()
         Dim graphics As Graphics = GraphPictureBox.CreateGraphics
-        Dim pen As New Pen(Color.Black)
+        Dim pen As New Pen(Color.AntiqueWhite)
         Dim y As Integer = 0
         Dim x As Integer = 0
 

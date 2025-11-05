@@ -62,6 +62,7 @@ Partial Class Form1
         Me.YLowLabel = New System.Windows.Forms.Label()
         Me.YFianlLabel = New System.Windows.Forms.Label()
         Me.CurrentDataLabel = New System.Windows.Forms.Label()
+        Me.ToolTip = New System.Windows.Forms.ToolTip(Me.components)
         CType(Me.GraphPictureBox, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.ButtonGroupBox.SuspendLayout()
         Me.TopMenuStrip.SuspendLayout()
@@ -89,6 +90,7 @@ Partial Class Form1
         Me.ColorButton.Size = New System.Drawing.Size(122, 79)
         Me.ColorButton.TabIndex = 7
         Me.ColorButton.Text = "&Select Color"
+        Me.ToolTip.SetToolTip(Me.ColorButton, "Open color select window")
         Me.ColorButton.UseVisualStyleBackColor = True
         '
         'GraphButton
@@ -100,6 +102,7 @@ Partial Class Form1
         Me.GraphButton.Size = New System.Drawing.Size(122, 79)
         Me.GraphButton.TabIndex = 6
         Me.GraphButton.Text = "&GRAPH"
+        Me.ToolTip.SetToolTip(Me.GraphButton, "Graph Sine,Cosine,Tangent waveform")
         Me.GraphButton.UseVisualStyleBackColor = True
         '
         'ExitButton
@@ -111,6 +114,7 @@ Partial Class Form1
         Me.ExitButton.Size = New System.Drawing.Size(122, 79)
         Me.ExitButton.TabIndex = 9
         Me.ExitButton.Text = "EXIT"
+        Me.ToolTip.SetToolTip(Me.ExitButton, "Close program")
         Me.ExitButton.UseVisualStyleBackColor = True
         '
         'StatusStrip
@@ -144,6 +148,7 @@ Partial Class Form1
         Me.ClearButton.Size = New System.Drawing.Size(122, 79)
         Me.ClearButton.TabIndex = 8
         Me.ClearButton.Text = "&CLEAR"
+        Me.ToolTip.SetToolTip(Me.ClearButton, "Clear the drawing area")
         Me.ClearButton.UseVisualStyleBackColor = True
         '
         'TopMenuStrip
@@ -153,7 +158,7 @@ Partial Class Form1
         Me.TopMenuStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.FileToolStripMenuItem, Me.EditToolStripMenuItem, Me.HelpToolStripMenuItem})
         Me.TopMenuStrip.Location = New System.Drawing.Point(0, 0)
         Me.TopMenuStrip.Name = "TopMenuStrip"
-        Me.TopMenuStrip.Size = New System.Drawing.Size(1402, 36)
+        Me.TopMenuStrip.Size = New System.Drawing.Size(1402, 33)
         Me.TopMenuStrip.TabIndex = 7
         Me.TopMenuStrip.Text = "MenuStrip1"
         '
@@ -161,52 +166,57 @@ Partial Class Form1
         '
         Me.FileToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.EXITToolStripMenuItem})
         Me.FileToolStripMenuItem.Name = "FileToolStripMenuItem"
-        Me.FileToolStripMenuItem.Size = New System.Drawing.Size(54, 32)
+        Me.FileToolStripMenuItem.Size = New System.Drawing.Size(54, 29)
         Me.FileToolStripMenuItem.Text = "&File"
         '
         'EXITToolStripMenuItem
         '
         Me.EXITToolStripMenuItem.Name = "EXITToolStripMenuItem"
-        Me.EXITToolStripMenuItem.Size = New System.Drawing.Size(148, 34)
+        Me.EXITToolStripMenuItem.Size = New System.Drawing.Size(270, 34)
         Me.EXITToolStripMenuItem.Text = "&EXIT"
+        Me.EXITToolStripMenuItem.ToolTipText = "Close Program"
         '
         'EditToolStripMenuItem
         '
         Me.EditToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.SelectColorToolStripMenuItem, Me.DrawWavefromToolStripMenuItem, Me.ClearToolStripMenuItem})
         Me.EditToolStripMenuItem.Name = "EditToolStripMenuItem"
-        Me.EditToolStripMenuItem.Size = New System.Drawing.Size(58, 32)
+        Me.EditToolStripMenuItem.Size = New System.Drawing.Size(58, 29)
         Me.EditToolStripMenuItem.Text = "&Edit"
         '
         'SelectColorToolStripMenuItem
         '
         Me.SelectColorToolStripMenuItem.Name = "SelectColorToolStripMenuItem"
-        Me.SelectColorToolStripMenuItem.Size = New System.Drawing.Size(242, 34)
+        Me.SelectColorToolStripMenuItem.Size = New System.Drawing.Size(270, 34)
         Me.SelectColorToolStripMenuItem.Text = "Select Color"
+        Me.SelectColorToolStripMenuItem.ToolTipText = "Open color select window"
         '
         'DrawWavefromToolStripMenuItem
         '
         Me.DrawWavefromToolStripMenuItem.Name = "DrawWavefromToolStripMenuItem"
-        Me.DrawWavefromToolStripMenuItem.Size = New System.Drawing.Size(242, 34)
+        Me.DrawWavefromToolStripMenuItem.Size = New System.Drawing.Size(270, 34)
         Me.DrawWavefromToolStripMenuItem.Text = "Draw Wavefrom"
+        Me.DrawWavefromToolStripMenuItem.ToolTipText = "Graph Sine,Cosine,Tangent waveform"
         '
         'ClearToolStripMenuItem
         '
         Me.ClearToolStripMenuItem.Name = "ClearToolStripMenuItem"
-        Me.ClearToolStripMenuItem.Size = New System.Drawing.Size(242, 34)
+        Me.ClearToolStripMenuItem.Size = New System.Drawing.Size(270, 34)
         Me.ClearToolStripMenuItem.Text = "Clear"
+        Me.ClearToolStripMenuItem.ToolTipText = "Clear the drawing area"
         '
         'HelpToolStripMenuItem
         '
         Me.HelpToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.AboutToolStripMenuItem})
         Me.HelpToolStripMenuItem.Name = "HelpToolStripMenuItem"
-        Me.HelpToolStripMenuItem.Size = New System.Drawing.Size(65, 32)
+        Me.HelpToolStripMenuItem.Size = New System.Drawing.Size(65, 29)
         Me.HelpToolStripMenuItem.Text = "&Help"
         '
         'AboutToolStripMenuItem
         '
         Me.AboutToolStripMenuItem.Name = "AboutToolStripMenuItem"
-        Me.AboutToolStripMenuItem.Size = New System.Drawing.Size(164, 34)
+        Me.AboutToolStripMenuItem.Size = New System.Drawing.Size(270, 34)
         Me.AboutToolStripMenuItem.Text = "&About"
+        Me.AboutToolStripMenuItem.ToolTipText = "Open the About Form"
         '
         'SerialPort
         '
@@ -221,6 +231,7 @@ Partial Class Form1
         Me.Connect_Button.Size = New System.Drawing.Size(136, 35)
         Me.Connect_Button.TabIndex = 1
         Me.Connect_Button.Text = "Connect"
+        Me.ToolTip.SetToolTip(Me.Connect_Button, "Connect to COM port")
         Me.Connect_Button.UseVisualStyleBackColor = False
         '
         'COMPort_ComboBox
@@ -232,6 +243,7 @@ Partial Class Form1
         Me.COMPort_ComboBox.Name = "COMPort_ComboBox"
         Me.COMPort_ComboBox.Size = New System.Drawing.Size(133, 31)
         Me.COMPort_ComboBox.TabIndex = 0
+        Me.ToolTip.SetToolTip(Me.COMPort_ComboBox, "Drop Down menu for COM port")
         '
         'RadioGroupBox
         '
@@ -256,6 +268,7 @@ Partial Class Form1
         Me.QBoardRadioButton.TabIndex = 4
         Me.QBoardRadioButton.TabStop = True
         Me.QBoardRadioButton.Text = "&Q@Board"
+        Me.ToolTip.SetToolTip(Me.QBoardRadioButton, "Enable Q@Board drawing mode")
         Me.QBoardRadioButton.UseVisualStyleBackColor = True
         '
         'MouseRadioButton
@@ -268,6 +281,7 @@ Partial Class Form1
         Me.MouseRadioButton.TabIndex = 3
         Me.MouseRadioButton.TabStop = True
         Me.MouseRadioButton.Text = "&Mouse"
+        Me.ToolTip.SetToolTip(Me.MouseRadioButton, "Enable Mouse drawing mode")
         Me.MouseRadioButton.UseVisualStyleBackColor = True
         '
         'ReadTimer
@@ -282,6 +296,7 @@ Partial Class Form1
         Me.XHighTextBox.Size = New System.Drawing.Size(104, 26)
         Me.XHighTextBox.TabIndex = 8
         Me.XHighTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        Me.ToolTip.SetToolTip(Me.XHighTextBox, "High byte of X")
         '
         'XLowTextBox
         '
@@ -291,6 +306,7 @@ Partial Class Form1
         Me.XLowTextBox.Size = New System.Drawing.Size(99, 26)
         Me.XLowTextBox.TabIndex = 9
         Me.XLowTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        Me.ToolTip.SetToolTip(Me.XLowTextBox, "Low byte of X")
         '
         'YHighTextBox
         '
@@ -300,6 +316,7 @@ Partial Class Form1
         Me.YHighTextBox.Size = New System.Drawing.Size(104, 26)
         Me.YHighTextBox.TabIndex = 10
         Me.YHighTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        Me.ToolTip.SetToolTip(Me.YHighTextBox, "High byte of Y")
         '
         'YLowTextBox
         '
@@ -309,6 +326,7 @@ Partial Class Form1
         Me.YLowTextBox.Size = New System.Drawing.Size(99, 26)
         Me.YLowTextBox.TabIndex = 11
         Me.YLowTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        Me.ToolTip.SetToolTip(Me.YLowTextBox, "Low byte of Y")
         '
         'CurrentTextBox
         '
@@ -318,6 +336,7 @@ Partial Class Form1
         Me.CurrentTextBox.Size = New System.Drawing.Size(118, 26)
         Me.CurrentTextBox.TabIndex = 12
         Me.CurrentTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        Me.ToolTip.SetToolTip(Me.CurrentTextBox, "All data read from Q@Board")
         '
         'CommandTimer
         '
@@ -331,6 +350,7 @@ Partial Class Form1
         Me.XFinalTextBox.Size = New System.Drawing.Size(72, 26)
         Me.XFinalTextBox.TabIndex = 13
         Me.XFinalTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        Me.ToolTip.SetToolTip(Me.XFinalTextBox, "Final X value")
         '
         'YFinalTextBox
         '
@@ -340,6 +360,7 @@ Partial Class Form1
         Me.YFinalTextBox.Size = New System.Drawing.Size(72, 26)
         Me.YFinalTextBox.TabIndex = 14
         Me.YFinalTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        Me.ToolTip.SetToolTip(Me.YFinalTextBox, "Final Y value")
         '
         'XHighLabel
         '
@@ -496,4 +517,5 @@ Partial Class Form1
     Friend WithEvents YLowLabel As Label
     Friend WithEvents YFianlLabel As Label
     Friend WithEvents CurrentDataLabel As Label
+    Friend WithEvents ToolTip As ToolTip
 End Class
